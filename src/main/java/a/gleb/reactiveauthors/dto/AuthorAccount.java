@@ -1,20 +1,13 @@
 package a.gleb.reactiveauthors.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
-import java.util.List;
-
-@Entity
+/*@Entity
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
+@NoArgsConstructor*/
 public class AuthorAccount {
 
 
-    @Id
+    /*@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @Column(name = "username")
@@ -45,5 +38,5 @@ public class AuthorAccount {
                 ", password='" + password + '\'' +
                 ", posts=" + posts +
                 '}';
-    }
+    }*/
 }

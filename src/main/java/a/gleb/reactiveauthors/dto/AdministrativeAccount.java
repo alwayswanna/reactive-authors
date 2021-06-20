@@ -1,14 +1,10 @@
 package a.gleb.reactiveauthors.dto;
 
-import lombok.Data;
-
-import javax.persistence.*;
-
-@Entity
-@Data
+/*@Entity
+@Data*/
 public class AdministrativeAccount {
 
-    @Id
+    /*@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @Column(name = "username")
@@ -20,6 +16,6 @@ public class AdministrativeAccount {
     @Column(name = "email")
     private String email;
     @Column(name = "password")
-    private String password;
+    private String password;*/
 
 }
