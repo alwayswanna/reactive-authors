@@ -24,6 +24,10 @@ public class AuthorPosts {
     @Column(name = "like")
     private int like;
 
+    @ManyToOne
+    @JoinColumn(name = "author")
+    private AuthorAccount authorAccount;
+
     @Override
     public String toString() {
         return "AuthorPosts{" +

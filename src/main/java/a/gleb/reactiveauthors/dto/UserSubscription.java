@@ -15,8 +15,10 @@ public class UserSubscription {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Column(name = "target")
-    private AuthorAccount authorAccount;
+
+    @ManyToOne
+    @JoinColumn(name = "user")
+    private AuthorAccount au_subscription;
 
 
 

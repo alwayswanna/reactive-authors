@@ -27,6 +27,23 @@ public class AuthorAccount {
     private String email;
     @Column(name = "password")
     private String password;
-    @Column(name = "subscriptions")
-    private List<UserSubscription> subscriptionList;
+
+    @OneToMany(mappedBy = "authorAccount")
+    private List<AuthorPosts> posts;
+
+    @OneToMany(mappedBy = "au_subscription")
+    private List<UserSubscription> userSubscriptions;
+
+    @Override
+    public String toString() {
+        return "AuthorAccount{" +
+                "id=" + id +
+                ", userName='" + userName + '\'' +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", posts=" + posts +
+                '}';
+    }
 }
