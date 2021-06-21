@@ -1,17 +1,37 @@
 package a.gleb.reactiveauthors.controllers;
 
-import a.gleb.reactiveauthors.domain.Message;
+import a.gleb.reactiveauthors.dto.AuthorPosts;
+import a.gleb.reactiveauthors.service.AuthorPostService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @RestController
-@RequestMapping("/some")
 public class MainController {
 
-    @GetMapping
+    private final AuthorPostService authorPostService;
+
+    @Autowired
+    public MainController(AuthorPostService authorPostService) {
+        this.authorPostService = authorPostService;
+    }
+
+    @GetMapping("/posts")
+    public Flux<AuthorPosts> loadAllPosts(@RequestParam(defaultValue = "0") Long start,
+                                          @RequestParam(defaultValue = "3") Long count){
+        return authorPostService.allAuthorPosts();
+    }
+
+    @PostMapping("/post")
+    public Mono<AuthorPosts> addNewPost(AuthorPosts authorPosts){
+        return authorPostService.addAuthorPost(authorPosts);
+    }
+
+    /*@GetMapping
     public Flux<Message> list(@RequestParam(defaultValue = "0") Long start, @RequestParam(defaultValue = "3") Long count){
         return
                 Flux
@@ -25,6 +45,6 @@ public class MainController {
                         .skip(start)
                         .take(count)
                         .map(Message::new);
-    }
+    }*/
 
 }
