@@ -1,18 +1,19 @@
 package a.gleb.reactiveauthors.dto;
 
-/*@Entity
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Table;
+
+@Table("subscription")
 @Data
-@AllArgsConstructor
-@NoArgsConstructor*/
+@NoArgsConstructor
 public class UserSubscription {
 
-    /*@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
     private Long id;
-
-    @ManyToOne
-    @JoinColumn(name = "user")
-    private AuthorAccount au_subscription;*/
+    private AuthorAccount au_subscription;
 
 
 

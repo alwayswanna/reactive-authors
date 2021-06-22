@@ -1,35 +1,21 @@
 package a.gleb.reactiveauthors.dto;
 
-/*@Entity
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Table;
+
+@Table("posts")
 @Data
 @NoArgsConstructor
-@AllArgsConstructor*/
 public class AuthorPosts {
 
-    /*@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
     private Long id;
-    @Column(name = "title")
     private String title;
-    @Column(name = "description")
     private String description;
-    @Column(name = "postText")
     private String postText;
-    @Column(name = "like")
     private int like;
-
-    @ManyToOne
-    @JoinColumn(name = "author")
     private AuthorAccount authorAccount;
 
-    @Override
-    public String toString() {
-        return "AuthorPosts{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", postText='" + postText + '\'' +
-                ", like=" + like +
-                '}';
-    }*/
 }
