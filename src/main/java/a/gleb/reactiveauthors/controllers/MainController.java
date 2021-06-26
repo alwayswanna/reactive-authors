@@ -3,10 +3,7 @@ package a.gleb.reactiveauthors.controllers;
 import a.gleb.reactiveauthors.dto.AuthorPosts;
 import a.gleb.reactiveauthors.service.AuthorPostService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -27,7 +24,7 @@ public class MainController {
     }
 
     @PostMapping("/post")
-    public Mono<AuthorPosts> addNewPost(AuthorPosts authorPosts){
+    public Mono<AuthorPosts> addNewPost(@RequestBody AuthorPosts authorPosts){
         return authorPostService.addAuthorPost(authorPosts);
     }
 

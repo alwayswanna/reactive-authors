@@ -9,9 +9,6 @@ public class ReactiveAuthorsApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(ReactiveAuthorsApplication.class, args);
-
-        GreetingWebClient gwc = new GreetingWebClient();
-        System.out.println(gwc.getResult());
     }
 
 }
