@@ -16,7 +16,7 @@ import java.util.Set;
 @Table("administration")
 @Data
 @NoArgsConstructor
-public class AdministrativeAccount implements UserDetails {
+public class Account implements UserDetails {
 
     @Id
     private Long id;

@@ -10,7 +10,7 @@ create table posts
 
 create table administration
 (
-    id       bigserial primary key,
+    id  bigserial primary key,
     username varchar(2048),
     password varchar(2048),
     name     varchar(2048),
