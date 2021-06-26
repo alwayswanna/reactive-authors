@@ -8,12 +8,12 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @RestController
-public class MainController {
+public class AuthorPostController {
 
     private final AuthorPostService authorPostService;
 
     @Autowired
-    public MainController(AuthorPostService authorPostService) {
+    public AuthorPostController(AuthorPostService authorPostService) {
         this.authorPostService = authorPostService;
     }
 

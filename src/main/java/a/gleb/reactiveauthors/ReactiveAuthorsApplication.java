@@ -1,6 +1,5 @@
 package a.gleb.reactiveauthors;
 
-import a.gleb.reactiveauthors.routes.GreetingWebClient;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
