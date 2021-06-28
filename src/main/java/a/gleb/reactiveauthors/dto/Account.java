@@ -5,13 +5,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.relational.core.mapping.MappedCollection;
 import org.springframework.data.relational.core.mapping.Table;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.Set;
+import java.util.List;
 
 @Table("administration")
 @Data
@@ -27,13 +27,12 @@ public class Account implements UserDetails {
     private String surname;
     private String email;
     private boolean active;
-    @MappedCollection(idColumn = "authority", keyColumn = "authority_id")
-    private Set<Role> roles;
+    private Role roles;
 
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return getRoles();
+        return List.of(new SimpleGrantedAuthority(roles.name()));
     }
 
     @Override

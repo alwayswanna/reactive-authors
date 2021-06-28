@@ -18,5 +18,4 @@ public class AuthorPosts {
     private String description;
     private String postText;
     private Long likes;
-    //private AuthorAccount authorAccount;
 }

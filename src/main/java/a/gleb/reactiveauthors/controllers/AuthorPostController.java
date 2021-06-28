@@ -28,20 +28,15 @@ public class AuthorPostController {
         return authorPostService.addAuthorPost(authorPosts);
     }
 
-    /*@GetMapping
-    public Flux<Message> list(@RequestParam(defaultValue = "0") Long start, @RequestParam(defaultValue = "3") Long count){
-        return
-                Flux
-                        .just(
-                                "Hello, reactive!",
-                                "More then one",
-                                "Third post",
-                                "Fourth post",
-                                "Fifth post"
-                        )
-                        .skip(start)
-                        .take(count)
-                        .map(Message::new);
-    }*/
+    @PutMapping("/post/{id}")
+    public Mono<AuthorPosts> editSelectedAuthorPost(@RequestBody AuthorPosts authorPost){
+        return authorPostService.editSelectedPost(authorPost);
+    }
+
+    @DeleteMapping("/post/{id}")
+    public Flux<AuthorPosts> deleteSelectedPost(@RequestBody AuthorPosts authorPosts){
+        return authorPostService.deleteSelectedAuthorPost(authorPosts);
+    }
+
 
 }

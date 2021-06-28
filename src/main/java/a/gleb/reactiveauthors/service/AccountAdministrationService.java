@@ -1,7 +1,7 @@
 package a.gleb.reactiveauthors.service;
 
 import a.gleb.reactiveauthors.dto.Account;
-import a.gleb.reactiveauthors.repos.AdministrativeAccountRepository;
+import a.gleb.reactiveauthors.repos.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
@@ -9,15 +9,15 @@ import reactor.core.publisher.Mono;
 @Service
 public class AccountAdministrationService {
 
-    private final AdministrativeAccountRepository administrativeAccountRepository;
+    private final AccountRepository accountRepository;
 
     @Autowired
-    public AccountAdministrationService(AdministrativeAccountRepository administrativeAccountRepository) {
-        this.administrativeAccountRepository = administrativeAccountRepository;
+    public AccountAdministrationService(AccountRepository accountRepository) {
+        this.accountRepository = accountRepository;
     }
 
     public Mono<Account> createAccount(Account account){
-        return administrativeAccountRepository.save(account);
+        return accountRepository.save(account);
     }
 
 }

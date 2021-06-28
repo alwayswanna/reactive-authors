@@ -24,7 +24,3 @@ create table user_role
     user_id int8 not null,
     roles   varchar(255)
 );
-
-alter table if exists user_role
-    add constraint user_role_fk
-    foreign key (user_id) references administration;
