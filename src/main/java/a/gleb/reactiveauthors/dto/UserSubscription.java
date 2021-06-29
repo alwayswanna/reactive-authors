@@ -11,9 +11,7 @@ import org.springframework.data.relational.core.mapping.Table;
 @NoArgsConstructor
 public class UserSubscription {
 
-    @Id
-    private Long id;
-    private AuthorAccount au_subscription;
+
 
 
 
