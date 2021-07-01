@@ -1,12 +1,22 @@
+import 'dart:convert';
+
+import 'package:authors_client/models/post.dart';
 import 'package:http/http.dart' as http;
 
-const BASE_URL = "localhost:8080";
+
+const ROOT_PATH = "localhost:8080";
 
 class Connection{
 
-  final uri = Uri.http(BASE_URL, "/posts");
+  Future<List<Post>> fetchPost() async{
 
-  void getPosts(){
-    var client = http.Client();
+    final uri = Uri.http(ROOT_PATH, "/posts");
+
+    final response = await http.get(uri);
+
+    Iterable list = jsonDecode(response.body);
+
+    return List<Post>.from(list.map((model) => Post.fromJson(model)));
   }
+
 }
