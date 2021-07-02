@@ -8,15 +8,20 @@ const ROOT_PATH = "localhost:8080";
 
 class Connection{
 
-  Future<List<Post>> fetchPost() async{
+  Future<Post> fetchPost() async {
+    final response =
+    await http.get(Uri.parse('http://localhost:8080/post/1'));
 
-    final uri = Uri.http(ROOT_PATH, "/posts");
-
-    final response = await http.get(uri);
-
-    Iterable list = jsonDecode(response.body);
-
-    return List<Post>.from(list.map((model) => Post.fromJson(model)));
+    if (response.statusCode == 200) {
+      // If the server did return a 200 OK response,
+      // then parse the JSON.
+      return Post.fromJson(jsonDecode(response.body));
+    } else {
+      // If the server did not return a 200 OK response,
+      // then throw an exception.
+      throw Exception('Failed to load album');
+    }
   }
+
 
 }

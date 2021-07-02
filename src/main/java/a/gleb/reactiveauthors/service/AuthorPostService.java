@@ -51,7 +51,7 @@ public class AuthorPostService {
     }
 
 
-
-
-
+    public Mono<AuthorPosts> loadPostById(Long id) {
+        return authorPostRepository.findById(id);
+    }
 }

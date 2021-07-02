@@ -8,6 +8,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @RestController
+@CrossOrigin
 public class AuthorPostController {
 
     private final AuthorPostService authorPostService;
@@ -21,6 +22,11 @@ public class AuthorPostController {
     public Flux<AuthorPosts> loadAllPosts(@RequestParam(defaultValue = "0") Long start,
                                           @RequestParam(defaultValue = "3") Long count){
         return authorPostService.allAuthorPosts();
+    }
+
+    @GetMapping("/post/{id}")
+    public Mono<AuthorPosts> loadPostById(@PathVariable Long id){
+        return authorPostService.loadPostById(id);
     }
 
     @PostMapping("/post")
