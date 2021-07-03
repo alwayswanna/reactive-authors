@@ -1,4 +1,3 @@
-
 class Post {
   final int id;
   final String title;
@@ -20,8 +19,6 @@ class Post {
         title: json['title'],
         description: json['description'],
         postText: json['postText'],
-        likes: json['likes']
-    );
+        likes: json['likes']);
   }
 }
-
