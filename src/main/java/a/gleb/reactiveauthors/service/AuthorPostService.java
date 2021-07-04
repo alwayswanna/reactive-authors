@@ -4,10 +4,13 @@ import a.gleb.reactiveauthors.dto.AuthorPosts;
 import a.gleb.reactiveauthors.exceptions.NoSuchPostWithSelectedIdException;
 import a.gleb.reactiveauthors.repos.AuthorPostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.BodyInserters;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.util.Objects;
 
 import static org.springframework.web.reactive.function.server.ServerResponse.ok;
 
@@ -39,15 +42,11 @@ public class AuthorPostService {
         }
     }
 
-    public Flux<AuthorPosts> deleteSelectedAuthorPost(AuthorPosts authorPosts){
-        Mono<AuthorPosts> authorPostCheck = authorPostRepository.findById(authorPosts.getId());
-        if (authorPostCheck == null){
-            throw new NoSuchPostWithSelectedIdException("NoSuchPostWithSelectedIdException: " +
-                    "there are no [AuthorPost] for delete with selected [ID] = " + authorPosts.getId());
-        }else{
-            authorPostRepository.delete(authorPosts);
-        }
-        return authorPostRepository.findAll();
+    public Mono<AuthorPosts> deleteSelectedAuthorPost(Long id){
+        return authorPostRepository.findById(id)
+                .flatMap(existPost ->
+                        authorPostRepository.delete(existPost)
+                                .then(Mono.just(existPost)));
     }
 
 
