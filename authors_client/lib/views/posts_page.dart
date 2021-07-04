@@ -19,17 +19,59 @@ class PostListState extends State<PostList> {
         .then((value) => {setState(() => _postList = value)});
   }
 
-  ListTile _buildItemsForListView(BuildContext context, int index) {
-    return ListTile(title: Text(_postList[index].title),
-                    subtitle: Column(
-                      children: [
-                        Text(_postList[index].description),
-                        ButtonBar(
+  void _addNewPost(){
+    Connection().createNewPost('Post from flutter', 'Flutter description', 'Text off flutter post');
+  }
 
-                        )
-                      ],
-                    )
+  ListTile _buildItemsForListView(BuildContext context, int index) {
+    Widget titleSection = Container(
+      padding: const EdgeInsets.all(32),
+      child: Row(
+        children: [
+          Expanded(
+            /*1*/
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: Text(
+                    _postList[index].title,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                Text(
+                  _postList[index].description,
+                  style: TextStyle(
+                    color: Colors.grey[500],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          /*3*/
+          Icon(
+            Icons.star,
+            color: Colors.red[500],
+          ),
+          Text(_postList[index].likes.toString()),
+        ],
+      ),
     );
+    return ListTile(
+        subtitle: titleSection
+    );
+  }
+
+  void handleClick(String value){
+    switch (value){
+      case 'Create account':
+        break;
+      case 'Login':
+        break;
+    }
   }
 
   @override
@@ -37,11 +79,30 @@ class PostListState extends State<PostList> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Reactive authors'),
+        actions: <Widget>[
+          PopupMenuButton<String>(
+            onSelected: handleClick,
+            itemBuilder: (BuildContext context) {
+              return {'Create account', 'Login'}.map((String choice) {
+                return PopupMenuItem<String>(
+                  value: choice,
+                  child: Text(choice),
+                );
+              }).toList();
+            },
+          )
+        ],
       ),
-      body: ListView.builder(
-        itemCount: _postList.length,
-        itemBuilder: _buildItemsForListView,
-      ),
+      body: GridView.count(
+          crossAxisCount: 3,
+          crossAxisSpacing: 10,
+        children: [
+            ListView.builder(
+              itemCount: _postList.length,
+              itemBuilder: _buildItemsForListView,
+            ),
+          ],
+      )
     );
   }
 }
