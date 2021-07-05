@@ -69,7 +69,7 @@ class PostListState extends State<PostList> {
     switch (value){
       case 'Create account':
         break;
-      case 'Login':
+      case 'Login': Navigator.pushNamed(context, '/login');
         break;
     }
   }
