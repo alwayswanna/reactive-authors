@@ -20,7 +20,7 @@ class PostListState extends State<PostList> {
 
   void _addNewPost() {
     Connection().createNewPost(
-        'Post from flutter', 'Flutter description', 'Text off flutter post');
+        'Post from flutter', 'Flutter description', 'Text off flutter post', 0);
   }
 
   ListTile _buildItemsForListView(BuildContext context, int index) {
@@ -70,6 +70,8 @@ class PostListState extends State<PostList> {
       case 'Login':
         Navigator.pushNamed(context, '/login');
         break;
+      case 'Add post':
+        Navigator.pushNamed(context, '/new_post');
     }
   }
 
@@ -82,7 +84,7 @@ class PostListState extends State<PostList> {
             PopupMenuButton<String>(
               onSelected: handleClick,
               itemBuilder: (BuildContext context) {
-                return {'Create account', 'Login'}.map((String choice) {
+                return {'Create account', 'Login', 'Add post'}.map((String choice) {
                   return PopupMenuItem<String>(
                     value: choice,
                     child: Text(choice),

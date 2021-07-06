@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:authors_client/models/post.dart';
 import 'package:http/http.dart' as http;
@@ -25,16 +24,17 @@ class Connection{
     }
   }
 
-  Future<http.Response> createNewPost(String title, String description, String postText){
+  Future<http.Response> createNewPost(String title, String description, String postText, int likes){
     return http.post(
       Uri.parse('http://localhost:8080/post'),
       headers: <String, String>{
         'ContentType' : 'application/json; charset=UTF-8'
       },
-      body: jsonEncode(<String, String>{
+      body: jsonEncode(<String, dynamic>{
           'title' : title,
           'description' : description,
           'postText' : postText,
+          'likes' : likes,
       })
     );
   }

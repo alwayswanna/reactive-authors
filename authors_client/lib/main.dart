@@ -1,3 +1,4 @@
+import 'package:authors_client/views/add_post_page.dart' as NewPost;
 import 'package:authors_client/views/login_page.dart' as LoginState;
 import 'package:authors_client/views/posts_page.dart';
 import 'package:flutter/cupertino.dart';
@@ -14,6 +15,7 @@ class ClientApp extends StatelessWidget {
       routes: {
         '/': (context) => PostList(),
         '/login': (context) => LoginState.LoginStatePage(),
+        '/new_post':(context) => NewPost.AddPostPage(),
       },
     );
   }
