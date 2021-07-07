@@ -3,14 +3,11 @@ import 'dart:convert';
 import 'package:authors_client/models/post.dart';
 import 'package:http/http.dart' as http;
 
-
 const ROOT_PATH = "localhost:8080";
 
-class Connection{
-
+class Connection {
   Future<List<Post>> fetchPost() async {
-    final response =
-    await http.get(Uri.parse('http://localhost:8080/posts'));
+    final response = await http.get(Uri.parse('http://localhost:8080/posts'));
 
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response,
@@ -24,25 +21,24 @@ class Connection{
     }
   }
 
-  Future<Post> createNewPost(String title, String description, String postText, int likes) async{
-    final response =  await http.post(
+  Future<Post> createNewPost(
+      String title, String description, String postText, int likes) async {
+    final response = await http.post(
       Uri.parse('http://localhost:8080/post'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode(<String, dynamic>{
-        'title' : title,
-        'description' : description,
-        'postText' : postText,
-        'likes' : likes,
+        'title': title,
+        'description': description,
+        'postText': postText,
+        'likes': likes,
       }),
     );
-    if(response.statusCode == 201){
+    if (response.statusCode == 201) {
       return Post.fromJson(jsonDecode(response.body));
-    }else{
+    } else {
       throw Exception('Failed to create new story');
     }
   }
-
-
 }

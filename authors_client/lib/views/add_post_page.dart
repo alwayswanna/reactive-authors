@@ -6,11 +6,12 @@ class AddPostPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Reactive Authors'),
-      ),
-      body: CustomForm(),
-    );
+        appBar: AppBar(
+          title: Text('Reactive Authors'),
+        ),
+        body: Center(
+          child: CustomForm(),
+        ));
   }
 }
 
@@ -45,50 +46,60 @@ class CustomFormState extends State<CustomForm> {
     TextEditingController story = TextEditingController();
     return Form(
         child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        TextFormField(
-          controller: title,
-          decoration: InputDecoration(
-            hintText: 'Title',
+        Container(
+          width: 300,
+          child: TextFormField(
+            controller: title,
+            decoration: InputDecoration(
+              hintText: 'Title',
+            ),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter title';
+              }
+              return null;
+            },
           ),
-          validator: (value) {
-            if (value == null || value.isEmpty) {
-              return 'Please enter title';
-            }
-            return null;
-          },
         ),
-        TextFormField(
-          controller: desc,
-          decoration: InputDecoration(
-            hintText: 'Description',
+        Container(
+          width: 300,
+          child: TextFormField(
+            controller: desc,
+            decoration: InputDecoration(
+              hintText: 'Description',
+            ),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter description';
+              }
+              return null;
+            },
           ),
-          validator: (value) {
-            if (value == null || value.isEmpty) {
-              return 'Please enter description';
-            }
-            return null;
-          },
         ),
-        TextFormField(
-          controller: story,
-          decoration: InputDecoration(
-            hintText: 'Full story',
+        Container(
+          width: 300,
+          child: TextFormField(
+            controller: story,
+            decoration: InputDecoration(
+              hintText: 'Full story',
+            ),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter story';
+              }
+              return null;
+            },
           ),
-          validator: (value) {
-            if (value == null || value.isEmpty) {
-              return 'Please enter story';
-            }
-            return null;
-          },
         ),
-        Padding(
+        Container(
           padding: const EdgeInsets.symmetric(vertical: 16.0),
           child: ElevatedButton(
-            onPressed: (){
+            onPressed: () {
               Connection().createNewPost(title.text, desc.text, story.text, 0);
-              print('Complete');
+              Navigator.pushNamed(context, "/");
             },
             child: Text('Create'),
           ),
