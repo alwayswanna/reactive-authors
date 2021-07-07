@@ -24,19 +24,24 @@ class Connection{
     }
   }
 
-  Future<http.Response> createNewPost(String title, String description, String postText, int likes){
-    return http.post(
+  Future<Post> createNewPost(String title, String description, String postText, int likes) async{
+    final response =  await http.post(
       Uri.parse('http://localhost:8080/post'),
       headers: <String, String>{
-        'ContentType' : 'application/json; charset=UTF-8'
+        'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode(<String, dynamic>{
-          'title' : title,
-          'description' : description,
-          'postText' : postText,
-          'likes' : likes,
-      })
+        'title' : title,
+        'description' : description,
+        'postText' : postText,
+        'likes' : likes,
+      }),
     );
+    if(response.statusCode == 201){
+      return Post.fromJson(jsonDecode(response.body));
+    }else{
+      throw Exception('Failed to create new story');
+    }
   }
 
 
