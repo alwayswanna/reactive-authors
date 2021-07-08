@@ -21,6 +21,16 @@ class Connection {
     }
   }
 
+  Future<Post> getSelectedPost(String id) async {
+    final response = await http.get(Uri.parse('http://localhost:8080/post/' + id));
+
+    if (response.statusCode == 200) {
+      return Post.fromJson(jsonDecode(response.body));
+    }else{
+      throw Exception('There are no post with [ID]: ' + id);
+    }
+  }
+
   Future<Post> createNewPost(
       String title, String description, String postText, int likes) async {
     final response = await http.post(
