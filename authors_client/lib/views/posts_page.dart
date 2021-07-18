@@ -18,11 +18,6 @@ class PostListState extends State<PostList> {
         .then((value) => {setState(() => _postList = value)});
   }
 
-  void _addNewPost() {
-    Connection().createNewPost(
-        'Post from flutter', 'Flutter description', 'Text off flutter post', 0);
-  }
-
   ListTile _buildItemsForListView(BuildContext context, int index) {
     Widget titleSection = Container(
       padding: const EdgeInsets.all(32),
@@ -48,6 +43,12 @@ class PostListState extends State<PostList> {
                     color: Colors.grey[500],
                   ),
                 ),
+                ElevatedButton(
+                    onPressed: (){
+                      var id = _postList[index].id;
+                      Navigator.pushNamed(context, '/single-story', arguments: id);
+                    },
+                    child: Text("Read more"))
               ],
             ),
           ),

@@ -33,7 +33,6 @@ String validatorField(value, String response) {
 void createNewPostMethod(String title, String desc, String fullStory) {
   int likes = 0;
   Connection().createNewPost(title, desc, fullStory, likes);
-  print('Complete');
 }
 
 class CustomFormState extends State<CustomForm> {
