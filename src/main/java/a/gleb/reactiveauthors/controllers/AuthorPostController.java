@@ -30,8 +30,8 @@ public class AuthorPostController {
     }
 
     @PostMapping("/post")
-    public Mono<AuthorPosts> addNewPost(@RequestBody AuthorPosts authorPosts){
-        return authorPostService.addAuthorPost(authorPosts);
+    public Mono<AuthorPosts> addNewPost(@RequestBody AuthorPosts authorPosts, @RequestParam String userName){
+        return authorPostService.addAuthorPost(authorPosts, userName);
     }
 
     @PutMapping("/post/{id}")

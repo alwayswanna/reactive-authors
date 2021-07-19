@@ -28,7 +28,8 @@ public class AuthorPostService {
         return authorPostRepository.findAll();
     }
 
-    public Mono<AuthorPosts> addAuthorPost(AuthorPosts authorPosts){
+    public Mono<AuthorPosts> addAuthorPost(AuthorPosts authorPosts, String user){
+        authorPosts.setAuthorUserName(user);
         return authorPostRepository.save(authorPosts);
     }
 

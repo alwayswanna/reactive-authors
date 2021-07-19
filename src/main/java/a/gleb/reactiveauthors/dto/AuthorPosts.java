@@ -17,5 +17,8 @@ public class AuthorPosts {
     private String title;
     private String description;
     private String postText;
+    private String authorUserName;
     private Long likes;
+
+    //TODO: edit authorUserName to normal entity One-to-Many relationships;
 }
