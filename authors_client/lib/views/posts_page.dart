@@ -20,6 +20,11 @@ class PostListState extends State<PostList> {
 
   ListTile _buildItemsForListView(BuildContext context, int index) {
     Widget titleSection = Container(
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: Colors.black12
+        )
+      ),
       padding: const EdgeInsets.all(32),
       child: Row(
         children: [
@@ -34,6 +39,8 @@ class PostListState extends State<PostList> {
                     _postList[index].title,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
+                      fontSize: 24,
+                      color: Colors.black
                     ),
                   ),
                 ),
@@ -43,12 +50,21 @@ class PostListState extends State<PostList> {
                     color: Colors.grey[500],
                   ),
                 ),
-                ElevatedButton(
-                    onPressed: (){
-                      var id = _postList[index].id;
-                      Navigator.pushNamed(context, '/single-story', arguments: id);
-                    },
-                    child: Text("Read more"))
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
+                  child: ElevatedButton(
+                      onPressed: (){
+                        var id = _postList[index].id;
+                        Navigator.pushNamed(context, '/single-story', arguments: id);
+                      },
+                      style: ElevatedButton.styleFrom(
+                          primary: Colors.black12,
+                          padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                          textStyle: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold)),
+                      child: Text("Read more")),
+                )
               ],
             ),
           ),
@@ -96,7 +112,7 @@ class PostListState extends State<PostList> {
           ],
         ),
         body: GridView.count(
-          crossAxisCount: 3,
+          crossAxisCount: 2,
           crossAxisSpacing: 10,
           children: [
             ListView.builder(
