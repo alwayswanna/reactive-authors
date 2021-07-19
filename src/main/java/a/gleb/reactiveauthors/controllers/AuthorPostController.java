@@ -40,8 +40,8 @@ public class AuthorPostController {
     }
 
     @DeleteMapping("/post/{id}")
-    public Flux<AuthorPosts> deleteSelectedPost(@RequestBody AuthorPosts authorPosts){
-        return authorPostService.deleteSelectedAuthorPost(authorPosts);
+    public Mono<AuthorPosts> deleteSelectedPost(@PathVariable Long id){
+        return authorPostService.deleteSelectedAuthorPost(id);
     }
 
 
