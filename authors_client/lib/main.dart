@@ -1,5 +1,6 @@
 import 'package:authors_client/views/add_post_page.dart' as NewPost;
 import 'package:authors_client/views/login_page.dart' as LoginState;
+import 'package:authors_client/views/registration_page.dart' as Registration;
 import 'package:authors_client/views/posts_page.dart';
 import 'package:authors_client/views/single_post.dart';
 
@@ -19,6 +20,7 @@ class ClientApp extends StatelessWidget {
         SinglePostState.routeName:(context) => SingleView(),
         '/login': (context) => LoginState.LoginStatePage(),
         '/new_post':(context) => NewPost.AddPostPage(),
+        '/register':(context) => Registration.RegistrationPage(),
       },
     );
   }

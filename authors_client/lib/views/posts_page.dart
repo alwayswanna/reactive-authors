@@ -83,6 +83,7 @@ class PostListState extends State<PostList> {
   void handleClick(String value) {
     switch (value) {
       case 'Create account':
+        Navigator.pushNamed(context, '/register');
         break;
       case 'Login':
         Navigator.pushNamed(context, '/login');

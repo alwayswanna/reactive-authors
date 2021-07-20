@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:authors_client/models/account.dart';
 import 'package:authors_client/models/post.dart';
 import 'package:http/http.dart' as http;
 
@@ -51,4 +52,27 @@ class Connection {
       throw Exception('Failed to create new story');
     }
   }
+
+  Future<Account> registerNewUser(String username, String password, String name, String surname, String email) async{
+    final response = await http.post(Uri.parse('http://localhost:8080/user'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, dynamic>{
+        'username': username,
+        'password': password,
+        'name': name,
+        'surname': surname,
+        'email': email,
+      }),
+    );
+    print(response.toString());
+    if(response.statusCode == 201){
+      return Account.fromJson(jsonDecode(response.body));
+    }else{
+      throw Exception('Failed to create new account');
+    }
+  }
+
+
 }
