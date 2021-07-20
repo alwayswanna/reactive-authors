@@ -54,7 +54,8 @@ class Connection {
   }
 
   Future<Account> registerNewUser(String username, String password, String name, String surname, String email) async{
-    final response = await http.post(Uri.parse('http://localhost:8080/user'),
+    final response = await http.post(
+        Uri.parse('http://localhost:8080/user'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },

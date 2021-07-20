@@ -126,7 +126,7 @@ class FormRegistrationState extends State<FormRegistration>{
              onPressed: (){
                Connection().registerNewUser(username.text, password.text, name.text, surname.text, email.text);
                //sendRegistrationData(username.text, password.text, name.text, surname.text, email.text);
-               Navigator.pushNamed(context, "/");
+               //Navigator.pushNamed(context, "/");
              },
              child: Text('Create user'),
            ),
