@@ -1,7 +1,6 @@
 package a.gleb.reactiveauthors.dto;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
@@ -21,7 +20,6 @@ public class Account implements UserDetails {
     @Id
     private Long id;
     private String username;
-    @JsonIgnore
     private String password;
     private String name;
     private String surname;
