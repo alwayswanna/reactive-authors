@@ -20,27 +20,27 @@ public class AuthorPostController {
 
     @GetMapping("/posts")
     public Flux<AuthorPosts> loadAllPosts(@RequestParam(defaultValue = "0") Long start,
-                                          @RequestParam(defaultValue = "3") Long count){
+                                          @RequestParam(defaultValue = "3") Long count) {
         return authorPostService.allAuthorPosts();
     }
 
     @GetMapping("/post/{id}")
-    public Mono<AuthorPosts> loadPostById(@PathVariable Long id){
+    public Mono<AuthorPosts> loadPostById(@PathVariable Long id) {
         return authorPostService.loadPostById(id);
     }
 
     @PostMapping("/post")
-    public Mono<AuthorPosts> addNewPost(@RequestBody AuthorPosts authorPosts, @RequestParam String userName){
+    public Mono<AuthorPosts> addNewPost(@RequestBody AuthorPosts authorPosts, @RequestParam String userName) {
         return authorPostService.addAuthorPost(authorPosts, userName);
     }
 
     @PutMapping("/post/{id}")
-    public Mono<AuthorPosts> editSelectedAuthorPost(@RequestBody AuthorPosts authorPost){
+    public Mono<AuthorPosts> editSelectedAuthorPost(@RequestBody AuthorPosts authorPost) {
         return authorPostService.editSelectedPost(authorPost);
     }
 
     @DeleteMapping("/post/{id}")
-    public Mono<AuthorPosts> deleteSelectedPost(@PathVariable Long id){
+    public Mono<AuthorPosts> deleteSelectedPost(@PathVariable Long id) {
         return authorPostService.deleteSelectedAuthorPost(id);
     }
 

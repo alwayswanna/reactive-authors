@@ -19,27 +19,27 @@ public class AccountController {
     }
 
     @PostMapping("/user")
-    public Mono<Account> createAccount(@RequestBody Account account){
+    public Mono<Account> createAccount(@RequestBody Account account) {
         return accountAdministrationService.createAccount(account);
     }
 
     @GetMapping("/users")
-    public Flux<Account> showAllAccounts(){
-        return  accountAdministrationService.showAllAccounts();
+    public Flux<Account> showAllAccounts() {
+        return accountAdministrationService.showAllAccounts();
     }
 
     @GetMapping("/user/{id}")
-    public Mono<Account> userAccountById(@PathVariable Long id){
-        return  accountAdministrationService.accountById(id);
+    public Mono<Account> userAccountById(@PathVariable Long id) {
+        return accountAdministrationService.accountById(id);
     }
 
     @PutMapping("/user")
-    public Mono<Account> editSelectedAccount(@RequestBody Account account){
+    public Mono<Account> editSelectedAccount(@RequestBody Account account) {
         return accountAdministrationService.editSelectedAccount(account);
     }
 
     @DeleteMapping("/user/{id}")
-    public Mono<Account> deleteSelectedUserAccount(@PathVariable Long id){
+    public Mono<Account> deleteSelectedUserAccount(@PathVariable Long id) {
         return accountAdministrationService.deleteSelected(id);
     }
 }

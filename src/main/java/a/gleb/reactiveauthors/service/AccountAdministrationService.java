@@ -4,15 +4,9 @@ import a.gleb.reactiveauthors.dto.Account;
 import a.gleb.reactiveauthors.dto.Role;
 import a.gleb.reactiveauthors.repos.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Objects;
-import java.util.Set;
 
 @Service
 public class AccountAdministrationService {
@@ -24,13 +18,13 @@ public class AccountAdministrationService {
         this.accountRepository = accountRepository;
     }
 
-    public Mono<Account> createAccount(Account account){
+    public Mono<Account> createAccount(Account account) {
         account.setActive(true);
-        account.setRoles(Role.ADMINISTRATOR);
+        account.setRoles(Role.AUTHOR);
         return accountRepository.save(account);
     }
 
-    public Flux<Account> showAllAccounts(){
+    public Flux<Account> showAllAccounts() {
         return accountRepository.findAll();
     }
 
@@ -40,13 +34,13 @@ public class AccountAdministrationService {
 
     public Mono<Account> editSelectedAccount(Account account) {
         account.setActive(true);
-        account.setRoles(Role.ADMINISTRATOR);
+        account.setRoles(Role.AUTHOR);
         return accountRepository.save(account);
     }
 
     public Mono<Account> deleteSelected(Long id) {
-       return accountRepository.findById(id)
-               .flatMap(dbAccount -> accountRepository.delete(dbAccount)
-                    .then(Mono.just(dbAccount)));
+        return accountRepository.findById(id)
+                .flatMap(dbAccount -> accountRepository.delete(dbAccount)
+                        .then(Mono.just(dbAccount)));
     }
 }
