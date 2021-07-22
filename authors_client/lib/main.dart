@@ -18,7 +18,7 @@ class ClientApp extends StatelessWidget {
       routes: {
         '/': (context) => PostList(),
         SinglePostState.routeName:(context) => SingleView(),
-        '/login': (context) => LoginState.LoginStatePage(),
+        '/login': (context) => LoginState.LoginPage(),
         '/new_post':(context) => NewPost.AddPostPage(),
         '/register':(context) => Registration.RegistrationPage(),
       },
