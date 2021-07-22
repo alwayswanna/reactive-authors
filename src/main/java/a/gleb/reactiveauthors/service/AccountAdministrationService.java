@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.Objects;
+
 @Service
 public class AccountAdministrationService {
 
@@ -47,5 +49,14 @@ public class AccountAdministrationService {
         return accountRepository.findById(id)
                 .flatMap(dbAccount -> accountRepository.delete(dbAccount)
                         .then(Mono.just(dbAccount)));
+    }
+
+    public Mono<Account> login(String username, String password) {
+        Mono<Account> accountInDb = accountRepository.findByUsername(username);
+        if (Objects.requireNonNull(accountInDb.block()).getPassword().equals(passwordEncoder.encode(password))){
+            return accountInDb;
+        }else{
+            throw new RuntimeException("Incorrect data");
+        }
     }
 }

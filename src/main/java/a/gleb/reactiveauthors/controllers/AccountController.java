@@ -42,4 +42,12 @@ public class AccountController {
     public Mono<Account> deleteSelectedUserAccount(@PathVariable Long id) {
         return accountAdministrationService.deleteSelected(id);
     }
+
+    @PostMapping("/login")
+    public Mono<Account> loginToAccount(@RequestParam String username, @RequestParam String password){
+        System.out.println(username + " " + password);
+        //TODO: create login?
+        return accountAdministrationService.login(username, password);
+    }
+
 }

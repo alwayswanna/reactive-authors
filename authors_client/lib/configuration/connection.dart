@@ -75,5 +75,19 @@ class Connection {
     }
   }
 
+  Future<Account> login(String username, String password) async{
+    final response = await http.post(
+      Uri.parse('http://localhost:8080/login?username=' + username + "&password=" + password),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+    );
+
+    if(response.statusCode == 201){
+      return Account.fromJson(jsonDecode(response.body));
+    }else{
+      throw Exception('Incorrect date for login');
+    }
+  }
 
 }
