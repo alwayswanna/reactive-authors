@@ -24,7 +24,7 @@ public class SecurityConfiguration {
                 .formLogin().and()
                 .httpBasic().disable()
                 .authorizeExchange()
-                .pathMatchers("/", "/login", "/favicon.ico", "/**").permitAll()
+                .pathMatchers("/", "/login", "/favicon.ico", "/**", "/user").permitAll()
                 .pathMatchers("/panel/administration", "/panel/administration/**").hasRole("ADMINISTRATOR")
                 .anyExchange().authenticated()
                 .and()

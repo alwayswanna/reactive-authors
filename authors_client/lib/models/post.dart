@@ -3,6 +3,7 @@ class Post {
   final String title;
   final String description;
   final String postText;
+  final String authorUserName;
   final int likes;
 
   Post({
@@ -10,6 +11,7 @@ class Post {
     required this.title,
     required this.description,
     required this.postText,
+    required this.authorUserName,
     required this.likes,
   });
 
@@ -19,6 +21,7 @@ class Post {
         title: json['title'],
         description: json['description'],
         postText: json['postText'],
+        authorUserName: json['authorUserName'],
         likes: json['likes']);
   }
 }
