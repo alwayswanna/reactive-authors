@@ -1,7 +1,6 @@
 package agleb.databaseservice.controllers;
 
 import agleb.databaseservice.model.Account;
-import agleb.databaseservice.model.Post;
 import agleb.databaseservice.model.dto.AccountDTO;
 import agleb.databaseservice.services.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;

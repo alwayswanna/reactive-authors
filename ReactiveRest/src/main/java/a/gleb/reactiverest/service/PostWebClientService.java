@@ -38,6 +38,24 @@ public class PostWebClientService {
                 .retrieve()
                 .bodyToMono(PostModel.class);
     }
+
+    public Mono<PostModel> editSelectedPost(String id, PostModel postModel){
+        return webClient
+                .put()
+                .uri(String.join("", "/post/", id))
+                .body(Mono.just(postModel), PostModel.class)
+                .retrieve()
+                .bodyToMono(PostModel.class);
+    }
+
+    public Flux<PostModel> deleteSelectedPost(String id){
+         webClient
+                .delete()
+                .uri(String.join("", "/post/", id))
+                .retrieve()
+                .bodyToMono(PostModel.class);
+        return getAllPost();
+    }
 }
 
 

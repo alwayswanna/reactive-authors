@@ -24,12 +24,23 @@ public class PostController {
     }
 
     @PostMapping("/post")
-    public Mono<PostModel> createNewPost(@RequestBody PostModel postModel){
+    public Mono<PostModel> createNewPost(@RequestBody final PostModel postModel){
         return postWebClientService.createPost(postModel);
     }
 
     @GetMapping("/post/{id}")
     public Mono<PostModel> getSelectedPost(@PathVariable final String id){
         return postWebClientService.getPostById(id);
+    }
+
+    @PutMapping("/post/{id}")
+    public Mono<PostModel> editSelectedPost(@PathVariable final String id,
+                                            @RequestBody final PostModel postModel){
+        return postWebClientService.editSelectedPost(id, postModel);
+    }
+
+    @DeleteMapping("/post/{id}")
+    public Flux<PostModel> deleteSelectedPost(@PathVariable final String id){
+        return postWebClientService.deleteSelectedPost(id);
     }
 }

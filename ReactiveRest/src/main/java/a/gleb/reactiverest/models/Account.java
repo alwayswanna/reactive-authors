@@ -3,6 +3,7 @@ package a.gleb.reactiverest.models;
 import lombok.Data;
 
 import java.util.List;
+import java.util.Set;
 
 @Data
 public class Account {
@@ -15,6 +16,7 @@ public class Account {
     private String email;
     private boolean active;
     List<PostModel> postModels;
+    private Set<AccountRole> roles;
 
 
 }
