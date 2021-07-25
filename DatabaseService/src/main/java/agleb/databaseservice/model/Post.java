@@ -32,7 +32,7 @@ public class Post {
         post.setId(postDTO.getId());
         post.setTitle(postDTO.getTitle());
         post.setDescription(postDTO.getDescription());
-        post.setFull_story(post.getFull_story());
+        post.setFull_story(postDTO.getFull_story());
         post.setLikes(postDTO.getLikes());
         if (Objects.nonNull(postDTO.getAuthorDTO())){
             post.setAuthor(Account.from(postDTO.getAuthorDTO()));
