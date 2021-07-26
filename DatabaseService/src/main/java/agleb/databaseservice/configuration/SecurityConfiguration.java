@@ -19,7 +19,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .cors().disable()
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/db_service/*", "/db_service/posts", "/db_service/post").permitAll()
+                .antMatchers("/db_service/*", "/db_service/posts", "/db_service/post", "/db_service/account", "/db_service/accounts", "/db_service/account/*").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

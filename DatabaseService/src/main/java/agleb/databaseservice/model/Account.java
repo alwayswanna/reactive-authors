@@ -3,9 +3,11 @@ package agleb.databaseservice.model;
 import agleb.databaseservice.model.dto.AccountDTO;
 import agleb.databaseservice.model.dto.RoleDTO;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jdk.jshell.EvalException;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.util.Assert;
 
 import javax.persistence.*;
 import java.util.Collection;
