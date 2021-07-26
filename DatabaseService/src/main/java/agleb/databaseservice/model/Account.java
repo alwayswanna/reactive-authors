@@ -10,9 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.util.Assert;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Entity
@@ -90,6 +88,7 @@ public class Account implements UserDetails {
         account.setSurname(accountDTO.getSurname());
         account.setEmail(accountDTO.getEmail());
         account.setActive(accountDTO.isActive());
+        //TODO: create check on null;
         account.setUser_stories(
                 accountDTO.getPostDTOList().stream()
                         .map(Post::from)
