@@ -2,7 +2,8 @@ package a.gleb.reactiverest.models;
 
 import lombok.Data;
 
-import java.util.List;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Set;
 
 @Data
@@ -15,8 +16,8 @@ public class Account {
     private String surname;
     private String email;
     private boolean active;
-    List<PostModel> postModels;
-    private Set<AccountRole> roles;
+    private Set<AccountRole> roleDTO;
+    private Collection<PostModel> postDTOList = new ArrayList<>();
 
 
 }

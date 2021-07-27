@@ -46,7 +46,7 @@ public class AccountWebClientService {
     public Mono<Account> editSelectedAccount(String id, Account account){
         return webClient
                 .put()
-                .uri("", "/account/", id)
+                .uri(String.join("", "/account/", id))
                 .body(Mono.just(account), Account.class)
                 .retrieve()
                 .bodyToMono(Account.class);
