@@ -1,13 +1,11 @@
 package agleb.databaseservice.model.dto;
 
 import agleb.databaseservice.model.Account;
+import agleb.databaseservice.model.Post;
 import agleb.databaseservice.model.Role;
 import lombok.Data;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Data
@@ -21,7 +19,7 @@ public class AccountDTO {
     private String email;
     private boolean active;
     private Set<RoleDTO> roleDTO;
-    private List<PostDTO> postDTOList = new ArrayList<>();
+    private Collection<PostDTO> postDTOList = new ArrayList<>();
 
     public static AccountDTO from(Account account){
         AccountDTO accountDTO = new AccountDTO();
@@ -32,11 +30,7 @@ public class AccountDTO {
         accountDTO.setSurname(account.getSurname());
         accountDTO.setEmail(account.getEmail());
         accountDTO.setActive(account.isActive());
-        accountDTO.setPostDTOList(
-                account.getUser_stories().stream()
-                        .map(PostDTO::from)
-                        .collect(Collectors.toList())
-        );
+        accountDTO.setPostDTOList(dtoConvertPost(account.getUser_stories()));
         accountDTO.setRoleDTO(converter(account));
 
         return accountDTO;
@@ -51,5 +45,15 @@ public class AccountDTO {
             roleDTOS.add(RoleDTO.AUTHOR);
         }
         return roleDTOS;
+    }
+
+    private static Collection<PostDTO> dtoConvertPost(Collection<Post> postList){
+        if (postList == null){
+            return null;
+        }else{
+            return postList.stream()
+                    .map(PostDTO::from)
+                    .collect(Collectors.toList());
+        }
     }
 }

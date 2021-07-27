@@ -1,6 +1,7 @@
 package agleb.databaseservice.model;
 
 import agleb.databaseservice.model.dto.AccountDTO;
+import agleb.databaseservice.model.dto.PostDTO;
 import agleb.databaseservice.model.dto.RoleDTO;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jdk.jshell.EvalException;
@@ -88,12 +89,7 @@ public class Account implements UserDetails {
         account.setSurname(accountDTO.getSurname());
         account.setEmail(accountDTO.getEmail());
         account.setActive(accountDTO.isActive());
-        //TODO: create check on null;
-        account.setUser_stories(
-                accountDTO.getPostDTOList().stream()
-                        .map(Post::from)
-                        .collect(Collectors.toList())
-        );
+        account.setUser_stories(converterList(accountDTO.getPostDTOList()));
         account.setRoles(converter(accountDTO));
         return account;
     }
@@ -106,6 +102,16 @@ public class Account implements UserDetails {
             roles.add(Role.AUTHOR);
         }
         return roles;
+    }
+
+    private static Collection<Post> converterList(Collection<PostDTO> dtoPostList){
+        if (dtoPostList == null){
+            return null;
+        }else{
+            return dtoPostList.stream()
+                    .map(Post::from)
+                    .collect(Collectors.toList());
+        }
     }
 
 
