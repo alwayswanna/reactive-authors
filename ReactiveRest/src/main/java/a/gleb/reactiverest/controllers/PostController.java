@@ -40,7 +40,7 @@ public class PostController {
     }
 
     @DeleteMapping("/post/{id}")
-    public Flux<PostModel> deleteSelectedPost(@PathVariable final String id){
+    public Mono<PostModel> deleteSelectedPost(@PathVariable final String id){
         return postWebClientService.deleteSelectedPost(id);
     }
 }

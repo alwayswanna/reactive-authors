@@ -46,8 +46,9 @@ public class AccountController {
 
     @DeleteMapping("/account/{id}")
     public ResponseEntity<AccountDTO> removeSelectedAccount(@PathVariable final Long id){
-        Account account = accountService.removeSelectedAccount(id);
-        return new ResponseEntity<>(AccountDTO.from(account), HttpStatus.OK);
+        Account accountResponse = accountService.getAccountById(id);
+        accountService.removeSelectedAccount(accountResponse);
+        return new ResponseEntity<>(AccountDTO.from(accountResponse), HttpStatus.OK);
     }
 
     @PutMapping("/account/{id}")

@@ -20,7 +20,7 @@ public class AccountWebClientService {
     public Flux<Account> getAllAccounts(){
         return webClient
                 .get()
-                .uri(String.join("", "/account"))
+                .uri(String.join("", "/accounts"))
                 .retrieve()
                 .bodyToFlux(Account.class);
     }

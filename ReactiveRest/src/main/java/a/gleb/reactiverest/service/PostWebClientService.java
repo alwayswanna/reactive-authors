@@ -48,13 +48,12 @@ public class PostWebClientService {
                 .bodyToMono(PostModel.class);
     }
 
-    public Flux<PostModel> deleteSelectedPost(String id){
-         webClient
+    public Mono<PostModel> deleteSelectedPost(String id){
+        return webClient
                 .delete()
                 .uri(String.join("", "/post/", id))
                 .retrieve()
                 .bodyToMono(PostModel.class);
-        return getAllPost();
     }
 }
 

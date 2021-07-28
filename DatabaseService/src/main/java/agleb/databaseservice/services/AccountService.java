@@ -1,11 +1,13 @@
 package agleb.databaseservice.services;
 
 import agleb.databaseservice.model.Account;
+import agleb.databaseservice.model.Post;
 import agleb.databaseservice.repositories.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -14,10 +16,12 @@ import java.util.stream.StreamSupport;
 public class AccountService {
 
     private final AccountRepository accountRepository;
+    private final PostService postService;
 
     @Autowired
-    public AccountService(AccountRepository accountRepository) {
+    public AccountService(AccountRepository accountRepository, PostService postService) {
         this.accountRepository = accountRepository;
+        this.postService = postService;
     }
 
     public Account createAccount(Account account){
@@ -48,10 +52,12 @@ public class AccountService {
             return accountRepository.save(toEditAccount);
     }
 
-    public Account removeSelectedAccount(Long id){
-        Account account = getAccountById(id);
+    public void removeSelectedAccount(Account account){
+        Collection<Post> posts = account.getUser_stories();
+        if (!posts.isEmpty()){
+            posts.forEach(var -> postService.removePostById(var.getId()));
+        }
         accountRepository.delete(account);
-        return account;
     }
 
 

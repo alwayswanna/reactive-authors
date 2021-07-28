@@ -18,7 +18,7 @@ public class AccountController {
         this.accountWebClientService = accountWebClientService;
     }
 
-    @GetMapping("/account")
+    @GetMapping("/accounts")
     public Flux<Account> getAllAccounts(){
         return accountWebClientService.getAllAccounts();
     }
