@@ -59,4 +59,12 @@ public class AccountWebClientService {
                 .retrieve()
                 .bodyToMono(Account.class);
     }
+
+    public Mono<Account> getAccountByUsername(String username) {
+        return webClient
+                .get()
+                .uri(String.join("", "/account/", username))
+                .retrieve()
+                .bodyToMono(Account.class);
+    }
 }

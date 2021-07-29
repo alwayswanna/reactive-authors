@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 @Data
 public class AccountDTO {
-
+//TODO: review models for database;
     private Long id;
     private String username;
     private String password;
