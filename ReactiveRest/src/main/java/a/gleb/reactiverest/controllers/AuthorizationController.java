@@ -6,9 +6,9 @@ import a.gleb.reactiverest.service.AccountWebClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.parameters.P;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
@@ -20,13 +20,15 @@ public class AuthorizationController {
 
     private final AccountWebClientService accountWebClientService;
     private final JWTUtil jwtUtil;
+    private final PasswordEncoder passwordEncoder;
     private static final ResponseEntity<Object> UNAUTHORIZED = ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     //TODO: passwordEncoder for services;
 
     @Autowired
-    public AuthorizationController(AccountWebClientService accountWebClientService, JWTUtil jwtUtil) {
+    public AuthorizationController(AccountWebClientService accountWebClientService, JWTUtil jwtUtil, PasswordEncoder passwordEncoder) {
         this.accountWebClientService = accountWebClientService;
         this.jwtUtil = jwtUtil;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @PostMapping("/login")
@@ -40,7 +42,7 @@ public class AuthorizationController {
 
                                             return Objects.equals(
                                                     credentials.getFirst("password"),
-                                                    userDetails.getPassword()
+                                                    passwordEncoder.encode(userDetails.getPassword())
                                             )
                                                     ? ResponseEntity.ok(jwtUtil.generateToken(userDetails))
                                                     : UNAUTHORIZED;
@@ -50,5 +52,9 @@ public class AuthorizationController {
                 );
     }
 
+    @GetMapping("/check/{username}")
+    public Mono<Account> check(@PathVariable String username){
+        return accountWebClientService.getAccountByUsername(username);
+    }
 }
 

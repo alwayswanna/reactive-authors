@@ -44,7 +44,7 @@ public class SecurityConfiguration {
                 .authenticationManager(authenticationManager)
                 .securityContextRepository(securityContextRepository)
                 .authorizeExchange()
-                .pathMatchers("/reactive_service/*", "/reactive_service/post/*").permitAll()
+                .pathMatchers("/reactive_service/*", "/reactive_service/post/*", "/security/check/*", "/security/*", "/security/check/*").permitAll()
                 .pathMatchers("/reactive_service/account/*", "/reactive_service/accounts", "/reactive_service/account").hasRole("ROLE_ADMINISTRATOR")
                 .anyExchange().authenticated()
                 .and()
