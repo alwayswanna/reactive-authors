@@ -8,7 +8,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 @Data
 public class Account implements UserDetails {
@@ -20,13 +19,13 @@ public class Account implements UserDetails {
     private String surname;
     private String email;
     private boolean active;
-    private Set<AccountRole> roleDTO;
+    private AccountRole roleDTO;
     private Collection<PostModel> postDTOList = new ArrayList<>();
 
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(roleDTO.toString()));
+        return List.of(new SimpleGrantedAuthority(roleDTO.name()));
     }
 
     @Override

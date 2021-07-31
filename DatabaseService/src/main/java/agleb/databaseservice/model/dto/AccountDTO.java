@@ -4,13 +4,13 @@ import agleb.databaseservice.model.Account;
 import agleb.databaseservice.model.Post;
 import agleb.databaseservice.model.Role;
 import lombok.Data;
+import org.springframework.security.core.GrantedAuthority;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Data
 public class AccountDTO {
-//TODO: review models for database;
     private Long id;
     private String username;
     private String password;
@@ -18,7 +18,7 @@ public class AccountDTO {
     private String surname;
     private String email;
     private boolean active;
-    private Set<RoleDTO> roleDTO;
+    private RoleDTO roleDTO;
     private Collection<PostDTO> postDTOList = new ArrayList<>();
 
     public static AccountDTO from(Account account){
@@ -37,14 +37,13 @@ public class AccountDTO {
 
     }
 
-    private static Set<RoleDTO> converter(Account account){
-        Set<RoleDTO> roleDTOS = new HashSet<>();
-        if (account.getRoles().stream().findFirst().get() == Role.ADMINISTRATOR){
-            roleDTOS.add(RoleDTO.ADMINISTRATOR);
+    private static RoleDTO converter(Account account){
+        Role roles = account.getRoles();
+        if (roles.name().equals(Role.ADMINISTRATOR.name())){
+            return RoleDTO.ADMINISTRATOR;
         }else{
-            roleDTOS.add(RoleDTO.AUTHOR);
+            return RoleDTO.AUTHOR;
         }
-        return roleDTOS;
     }
 
     private static Collection<PostDTO> dtoConvertPost(Collection<Post> postList){

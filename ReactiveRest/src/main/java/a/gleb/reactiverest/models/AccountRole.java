@@ -1,6 +1,13 @@
 package a.gleb.reactiverest.models;
 
-public enum AccountRole {
+import org.springframework.security.core.GrantedAuthority;
 
-    ROLE_AUTHOR, ROLE_ADMINISTRATOR
+public enum AccountRole implements GrantedAuthority {
+
+    ROLE_AUTHOR, ROLE_ADMINISTRATOR;
+
+    @Override
+    public String getAuthority() {
+        return name();
+    }
 }

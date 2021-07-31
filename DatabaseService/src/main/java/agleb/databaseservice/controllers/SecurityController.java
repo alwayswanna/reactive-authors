@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/db_service/account/name/")
+@RequestMapping("/db_service/account/usrname/")
 public class SecurityController {
 
     private final SecurityService securityService;
