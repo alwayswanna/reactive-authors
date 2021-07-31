@@ -50,10 +50,5 @@ public class AuthorizationController {
                         .defaultIfEmpty(UNAUTHORIZED)
                 );
     }
-
-    @GetMapping("/check/{username}")
-    public Mono<Account> check(@PathVariable String username){
-        return accountWebClientService.getAccountByUsername(username);
-    }
 }
 
