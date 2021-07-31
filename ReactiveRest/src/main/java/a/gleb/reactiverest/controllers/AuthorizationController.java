@@ -6,6 +6,8 @@ import a.gleb.reactiverest.service.AccountWebClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ServerWebExchange;
@@ -38,10 +40,9 @@ public class AuthorizationController {
                                 .cast(Account.class)
                                 .map(userDetails ->
                                         {
-
-                                            return Objects.equals(
+                                            return passwordEncoder.matches(
                                                     credentials.getFirst("password"),
-                                                    passwordEncoder.encode(userDetails.getPassword())
+                                                    userDetails.getPassword()
                                             )
                                                     ? ResponseEntity.ok(jwtUtil.generateToken(userDetails))
                                                     : UNAUTHORIZED;
