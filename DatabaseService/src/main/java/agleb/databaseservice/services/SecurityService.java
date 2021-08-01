@@ -4,7 +4,6 @@ import agleb.databaseservice.model.Account;
 import agleb.databaseservice.repositories.AccountRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -12,12 +11,10 @@ import org.springframework.stereotype.Service;
 public class SecurityService {
 
     private final AccountRepository accountRepository;
-    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public SecurityService(AccountRepository accountRepository, PasswordEncoder passwordEncoder) {
+    public SecurityService(AccountRepository accountRepository) {
         this.accountRepository = accountRepository;
-        this.passwordEncoder = passwordEncoder;
     }
 
     public Account securityAuthorization(String username){

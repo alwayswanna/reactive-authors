@@ -1,26 +1,35 @@
 package a.gleb.reactiverest.controllers;
 
 import a.gleb.reactiverest.models.Account;
+import a.gleb.reactiverest.models.PostModel;
 import a.gleb.reactiverest.service.AccountWebClientService;
+import a.gleb.reactiverest.service.PostWebClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @RestController
-@RequestMapping("/reactive_service")
-public class AccountController {
+@RequestMapping("/unauthorized")
+public class UnauthorizedController {
 
+    private final PostWebClientService postWebClientService;
     private final AccountWebClientService accountWebClientService;
 
     @Autowired
-    public AccountController(AccountWebClientService accountWebClientService) {
+    public UnauthorizedController(PostWebClientService postWebClientService, AccountWebClientService accountWebClientService) {
+        this.postWebClientService = postWebClientService;
         this.accountWebClientService = accountWebClientService;
     }
 
-    @GetMapping("/accounts")
-    public Flux<Account> getAllAccounts(){
-        return accountWebClientService.getAllAccounts();
+    @GetMapping("/posts")
+    public Flux<PostModel> getAllStories(){
+        return postWebClientService.getAllPost();
+    }
+
+    @GetMapping("/post/{id}")
+    public Mono<PostModel> getSelectedPost(@PathVariable final String id){
+        return postWebClientService.getPostById(id);
     }
 
     @GetMapping("/account/{id}")
@@ -28,21 +37,9 @@ public class AccountController {
         return accountWebClientService.getAccountById(id);
     }
 
-    @PostMapping("/account")
+    @PostMapping("/create/account")
     public Mono<Account> createNewAccount(@RequestBody final Account account){
         return accountWebClientService.createNewAccount(account);
     }
-
-    @PutMapping("/account/{id}")
-    public Mono<Account> editSelectedAccount(@PathVariable final String id,
-                                             @RequestBody final Account account){
-        return accountWebClientService.editSelectedAccount(id, account);
-    }
-
-    @DeleteMapping("/account/{id}")
-    public Mono<Account> deleteSelectedAccount(@PathVariable final String id){
-        return accountWebClientService.deleteSelectedAccount(id);
-    }
-
 
 }
