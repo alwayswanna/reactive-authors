@@ -35,16 +35,24 @@ public class AuthenticationManager implements ReactiveAuthenticationManager {
             log.warn(e.getMessage());
         }
         //TODO: there are returned empty Mono
-        if (username != null && jwtUtil.validation(authToken)){
-            Claims allClaims = jwtUtil.getClaimsFromToken(authToken);
-            List<String> roles = allClaims.get("roleDTO", List.class);
-            List<SimpleGrantedAuthority> simpleGrantedAuthorities = roles.stream()
+        log.info(username);
+        log.info(String.valueOf(jwtUtil.validation(authToken)));
+        log.info(authToken);
+        if (username != null && jwtUtil.validation(authToken)) {
+            Claims claims = jwtUtil.getClaimsFromToken(authToken);
+            //roleDTO for roles mapping on create?
+            List<String> role = claims.get("role", List.class);
+            List<SimpleGrantedAuthority> authorities = role.stream()
                     .map(SimpleGrantedAuthority::new)
                     .collect(Collectors.toList());
-            UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
-                    new UsernamePasswordAuthenticationToken(username,null, simpleGrantedAuthorities);
-            return Mono.just(usernamePasswordAuthenticationToken);
-        }else {
+            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
+                    username,
+                    null,
+                    authorities
+            );
+
+            return Mono.just(authenticationToken);
+        } else {
             return Mono.empty();
         }
     }
