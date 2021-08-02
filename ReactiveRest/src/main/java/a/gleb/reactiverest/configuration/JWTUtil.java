@@ -37,7 +37,7 @@ public class JWTUtil {
     public boolean validation(String authToken) {
         return getClaimsFromToken(authToken)
                 .getExpiration()
-                .before(new Date());
+                .after(new Date());
     }
 
     public String generateToken(Account account){
