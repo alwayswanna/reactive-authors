@@ -39,10 +39,10 @@ public class AccountDTO {
 
     private static RoleDTO converter(Account account){
         Role roles = account.getRoles();
-        if (roles.name().equals(Role.ADMINISTRATOR.name())){
-            return RoleDTO.ADMINISTRATOR;
+        if (roles.name().equals(Role.ROLE_ADMINISTRATOR.name())){
+            return RoleDTO.ROLE_ADMINISTRATOR;
         }else{
-            return RoleDTO.AUTHOR;
+            return RoleDTO.ROLE_AUTHOR;
         }
     }
 

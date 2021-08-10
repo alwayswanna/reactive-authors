@@ -5,11 +5,12 @@ import a.gleb.reactiverest.models.PostModel;
 import a.gleb.reactiverest.service.AccountWebClientService;
 import a.gleb.reactiverest.service.PostWebClientService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
 @RestController
-@RequestMapping("/author_authorization")
+@RequestMapping("/author")
 public class AuthorAuthorizationController {
 
     private final PostWebClientService postWebClientService;
@@ -21,9 +22,10 @@ public class AuthorAuthorizationController {
         this.accountWebClientService = accountWebClientService;
     }
 
-    @PostMapping("/create/post")
-    public Mono<PostModel> createNewPost(@RequestBody final PostModel postModel){
-        return postWebClientService.createPost(postModel);
+    @PostMapping("/post")
+    public Mono<ResponseEntity<Mono<PostModel>>> createNewPost(@RequestBody final PostModel postModel){
+        var response = postWebClientService.createPost(postModel);
+        return Mono.just(ResponseEntity.ok(response));
     }
 
     @PutMapping("/edit/post/{id}")

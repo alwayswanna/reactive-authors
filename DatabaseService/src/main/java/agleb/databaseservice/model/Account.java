@@ -88,10 +88,10 @@ public class Account implements UserDetails {
 
     private static Role converter(AccountDTO accountDTO){
         RoleDTO roleDTO = accountDTO.getRoleDTO();
-        if (roleDTO.name().equals(RoleDTO.ADMINISTRATOR.name())){
-            return Role.ADMINISTRATOR;
+        if (roleDTO.name().equals(RoleDTO.ROLE_ADMINISTRATOR.name())){
+            return Role.ROLE_ADMINISTRATOR;
         }else{
-            return Role.AUTHOR;
+            return Role.ROLE_AUTHOR;
         }
     }
 
