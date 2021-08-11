@@ -1,10 +1,13 @@
 package agleb.databaseservice.configuration;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 
 @Configuration
@@ -15,11 +18,19 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
+        final String uri = "/db_service/";
+
         http
                 .cors().disable()
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/db_service/*", "/db_service/posts", "/db_service/post", "/db_service/account", "/db_service/accounts", "/db_service/account/*", "/db_service/post/*").permitAll()
+                .antMatchers(uri + "account/usrname/*",
+                                        uri + "post",
+                                        uri + "post/*",
+                                        uri + "posts",
+                                        uri + "account",
+                                        uri + "accounts").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -29,4 +40,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .logout()
                 .permitAll();
     }
+
+    @Bean
+    public PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder(13);
+    }
+
 }

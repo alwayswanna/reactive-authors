@@ -1,6 +1,5 @@
 package a.gleb.reactiverest.models;
 
 public enum AccountRole {
-
-    AUTHOR, ADMINISTRATOR
+    ROLE_AUTHOR, ROLE_ADMINISTRATOR;
 }

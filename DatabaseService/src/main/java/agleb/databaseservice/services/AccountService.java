@@ -4,6 +4,7 @@ import agleb.databaseservice.model.Account;
 import agleb.databaseservice.model.Post;
 import agleb.databaseservice.repositories.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -17,14 +18,18 @@ public class AccountService {
 
     private final AccountRepository accountRepository;
     private final PostService postService;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public AccountService(AccountRepository accountRepository, PostService postService) {
+    public AccountService(AccountRepository accountRepository, PostService postService, PasswordEncoder passwordEncoder) {
         this.accountRepository = accountRepository;
+        this.passwordEncoder = passwordEncoder;
         this.postService = postService;
     }
 
     public Account createAccount(Account account){
+        account.setPassword(
+                passwordEncoder.encode(account.getPassword()));
         return accountRepository.save(account);
     }
 

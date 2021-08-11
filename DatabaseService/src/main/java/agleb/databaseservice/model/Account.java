@@ -4,14 +4,14 @@ import agleb.databaseservice.model.dto.AccountDTO;
 import agleb.databaseservice.model.dto.PostDTO;
 import agleb.databaseservice.model.dto.RoleDTO;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import jdk.jshell.EvalException;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.util.Assert;
 
 import javax.persistence.*;
-import java.util.*;
+import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Entity
@@ -34,14 +34,14 @@ public class Account implements UserDetails {
     @JsonManagedReference
     private Collection<Post> user_stories;
 
-    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
-    private Set<Role> roles;
+    private Role roles;
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return getRoles();
+        return List.of(new SimpleGrantedAuthority(roles.name()));
     }
 
     @Override
@@ -62,14 +62,6 @@ public class Account implements UserDetails {
     @Override
     public boolean isEnabled() {
         return isActive();
-    }
-
-    public Set<Role> getRoles(){
-        return roles;
-    }
-
-    public void setRoles(Set<Role> roles){
-        this.roles = roles;
     }
 
     public boolean isActive(){
@@ -94,14 +86,13 @@ public class Account implements UserDetails {
         return account;
     }
 
-    private static Set<Role> converter(AccountDTO accountDTO){
-        Set<Role> roles = new HashSet<>();
-        if (accountDTO.getRoleDTO().stream().findFirst().get() == RoleDTO.ADMINISTRATOR){
-            roles.add(Role.ADMINISTRATOR);
+    private static Role converter(AccountDTO accountDTO){
+        RoleDTO roleDTO = accountDTO.getRoleDTO();
+        if (roleDTO.name().equals(RoleDTO.ROLE_ADMINISTRATOR.name())){
+            return Role.ROLE_ADMINISTRATOR;
         }else{
-            roles.add(Role.AUTHOR);
+            return Role.ROLE_AUTHOR;
         }
-        return roles;
     }
 
     private static Collection<Post> converterList(Collection<PostDTO> dtoPostList){

@@ -1,11 +1,10 @@
 package agleb.databaseservice.model;
 
-import agleb.databaseservice.model.dto.RoleDTO;
 import org.springframework.security.core.GrantedAuthority;
 
 public enum Role implements GrantedAuthority {
 
-    AUTHOR, ADMINISTRATOR;
+    ROLE_AUTHOR, ROLE_ADMINISTRATOR;
 
     @Override
     public String getAuthority() {
