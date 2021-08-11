@@ -6,6 +6,7 @@ import agleb.databaseservice.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,12 +21,6 @@ public class PostController {
     @Autowired
     public PostController(PostService postService) {
         this.postService = postService;
-    }
-
-    @PostMapping("/post")
-    public ResponseEntity<PostDTO> createPost(@RequestBody final PostDTO postDTO){
-        Post post = postService.createPost(Post.from(postDTO));
-        return new ResponseEntity<>(PostDTO.from(post), HttpStatus.OK);
     }
 
     @GetMapping("/post/{id}")
@@ -45,17 +40,25 @@ public class PostController {
     }
 
     @DeleteMapping("/post/{id}")
+    @PreAuthorize("hasRole('AUTHOR') or hasRole('ADMINISTRATOR')")
     public ResponseEntity<PostDTO> deletePostById(@PathVariable final Long id){
         Post postDeleted = postService.removePostById(id);
         return new ResponseEntity<>(PostDTO.from(postDeleted), HttpStatus.OK);
     }
 
     @PutMapping("/post/{id}")
+    @PreAuthorize("hasRole('AUTHOR') or hasRole('ADMINISTRATOR')")
     public ResponseEntity<PostDTO> editPostById(@PathVariable final Long id,
                                             @RequestBody final PostDTO postDTO){
         Post post = postService.editSelectedPost(id, Post.from(postDTO));
         return new ResponseEntity<>(PostDTO.from(post), HttpStatus.OK);
     }
 
+    @PostMapping("/post")
+    @PreAuthorize("hasRole('AUTHOR') or hasRole('ADMINISTRATOR')")
+    public ResponseEntity<PostDTO> createPost(@RequestBody final PostDTO postDTO){
+        Post post = postService.createPost(Post.from(postDTO));
+        return new ResponseEntity<>(PostDTO.from(post), HttpStatus.OK);
+    }
 
 }

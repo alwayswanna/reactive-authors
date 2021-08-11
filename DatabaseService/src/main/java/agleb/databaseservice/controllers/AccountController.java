@@ -6,6 +6,7 @@ import agleb.databaseservice.services.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -45,6 +46,7 @@ public class AccountController {
     }
 
     @DeleteMapping("/account/{id}")
+    @PreAuthorize("hasRole('AUTHOR') or hasRole('ADMINISTRATOR')")
     public ResponseEntity<AccountDTO> removeAccountById(@PathVariable final Long id){
         Account accountResponse = accountService.getAccountById(id);
         accountService.removeSelectedAccount(accountResponse);
@@ -52,6 +54,7 @@ public class AccountController {
     }
 
     @PutMapping("/account/{id}")
+    @PreAuthorize("hasRole('AUTHOR') or hasRole('ADMINISTRATOR')")
     public ResponseEntity<AccountDTO> editSelectedAccountById(
                                 @PathVariable final Long id,
                                 @RequestBody AccountDTO accountDTO){
