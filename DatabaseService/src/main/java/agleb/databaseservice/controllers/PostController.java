@@ -23,19 +23,19 @@ public class PostController {
     }
 
     @PostMapping("/post")
-    public ResponseEntity<PostDTO> create(@RequestBody final PostDTO postDTO){
+    public ResponseEntity<PostDTO> createPost(@RequestBody final PostDTO postDTO){
         Post post = postService.createPost(Post.from(postDTO));
         return new ResponseEntity<>(PostDTO.from(post), HttpStatus.OK);
     }
 
     @GetMapping("/post/{id}")
-    public ResponseEntity<PostDTO> getSingleStory(@PathVariable final Long id){
+    public ResponseEntity<PostDTO> getPostById(@PathVariable final Long id){
         Post post = postService.getPostById(id);
         return new ResponseEntity<>(PostDTO.from(post), HttpStatus.OK);
     }
 
     @GetMapping("/posts")
-    public ResponseEntity<List<PostDTO>> getPosts(){
+    public ResponseEntity<List<PostDTO>> getAllPosts(){
         List<Post> postList = postService.getAllPosts();
         List<PostDTO> postDTOList = postList
                 .stream()
@@ -45,13 +45,13 @@ public class PostController {
     }
 
     @DeleteMapping("/post/{id}")
-    public ResponseEntity<PostDTO> deletePost(@PathVariable final Long id){
+    public ResponseEntity<PostDTO> deletePostById(@PathVariable final Long id){
         Post postDeleted = postService.removePostById(id);
         return new ResponseEntity<>(PostDTO.from(postDeleted), HttpStatus.OK);
     }
 
     @PutMapping("/post/{id}")
-    public ResponseEntity<PostDTO> editPost(@PathVariable final Long id,
+    public ResponseEntity<PostDTO> editPostById(@PathVariable final Long id,
                                             @RequestBody final PostDTO postDTO){
         Post post = postService.editSelectedPost(id, Post.from(postDTO));
         return new ResponseEntity<>(PostDTO.from(post), HttpStatus.OK);

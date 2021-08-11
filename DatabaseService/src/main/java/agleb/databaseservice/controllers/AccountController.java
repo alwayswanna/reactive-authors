@@ -45,14 +45,14 @@ public class AccountController {
     }
 
     @DeleteMapping("/account/{id}")
-    public ResponseEntity<AccountDTO> removeSelectedAccount(@PathVariable final Long id){
+    public ResponseEntity<AccountDTO> removeAccountById(@PathVariable final Long id){
         Account accountResponse = accountService.getAccountById(id);
         accountService.removeSelectedAccount(accountResponse);
         return new ResponseEntity<>(AccountDTO.from(accountResponse), HttpStatus.OK);
     }
 
     @PutMapping("/account/{id}")
-    public ResponseEntity<AccountDTO> editSelectedAccount(
+    public ResponseEntity<AccountDTO> editSelectedAccountById(
                                 @PathVariable final Long id,
                                 @RequestBody AccountDTO accountDTO){
         Account account = accountService.editSelectedAccount(id, Account.from(accountDTO));

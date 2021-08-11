@@ -18,11 +18,19 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
+        final String uri = "/db_service/";
+
         http
                 .cors().disable()
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/db_service/account/usrname/*", "/db_service/account/usrname/create", "/db_service/post", "/db_service/post/*", "/db_service/posts", "/db_service/account", "/db_service/accounts").permitAll()
+                .antMatchers(uri + "account/usrname/*",
+                                        uri + "post",
+                                        uri + "post/*",
+                                        uri + "posts",
+                                        uri + "account",
+                                        uri + "accounts").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
