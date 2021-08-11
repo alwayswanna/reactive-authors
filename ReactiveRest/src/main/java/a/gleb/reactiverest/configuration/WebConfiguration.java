@@ -57,7 +57,7 @@ public class WebConfiguration {
                 .securityContextRepository(securityContextRepository)
                 .authorizeExchange()
                 .pathMatchers(HttpMethod.OPTIONS).authenticated()
-                .pathMatchers("/login", "/unauthorized/create/account", "/unauthorized/account/*", "/unauthorized/posts", "/unauthorized/post/*").permitAll()
+                .pathMatchers("/login", "/unauthorized/create/account", "/unauthorized/account/*", "/unauthorized/posts", "/unauthorized/post/*", "/administrator_authorization/accounts").permitAll()
                 .anyExchange().authenticated()
                 .and().build();
     }
