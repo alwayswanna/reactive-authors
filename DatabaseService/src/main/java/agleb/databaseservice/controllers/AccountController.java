@@ -46,7 +46,6 @@ public class AccountController {
     }
 
     @DeleteMapping("/account/{id}")
-    @PreAuthorize("hasRole('AUTHOR') or hasRole('ADMINISTRATOR')")
     public ResponseEntity<AccountDTO> removeAccountById(@PathVariable final Long id){
         Account accountResponse = accountService.getAccountById(id);
         accountService.removeSelectedAccount(accountResponse);
@@ -54,7 +53,6 @@ public class AccountController {
     }
 
     @PutMapping("/account/{id}")
-    @PreAuthorize("hasRole('AUTHOR') or hasRole('ADMINISTRATOR')")
     public ResponseEntity<AccountDTO> editSelectedAccountById(
                                 @PathVariable final Long id,
                                 @RequestBody AccountDTO accountDTO){
