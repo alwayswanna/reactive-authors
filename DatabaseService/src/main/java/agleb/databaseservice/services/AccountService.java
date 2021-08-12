@@ -1,5 +1,7 @@
 package agleb.databaseservice.services;
 
+import agleb.databaseservice.exceptions.DuplicateUsernameException;
+import agleb.databaseservice.exceptions.NoSuchAccountException;
 import agleb.databaseservice.model.Account;
 import agleb.databaseservice.model.Post;
 import agleb.databaseservice.repositories.AccountRepository;
@@ -27,45 +29,75 @@ public class AccountService {
         this.postService = postService;
     }
 
-    public Account createAccount(Account account){
-        account.setPassword(
-                passwordEncoder.encode(account.getPassword()));
-        return accountRepository.save(account);
+    public Account createAccount(Account account) {
+        if (findAccountByUsername(account.getUsername()) == null) {
+            account.setPassword(
+                    passwordEncoder.encode(account.getPassword()));
+            return accountRepository.save(account);
+        } else {
+            throw new DuplicateUsernameException("DuplicateUsernameException: user with [username]:  " + account.getUsername() +
+                    "  already exist in database");
+        }
+
+
     }
 
-    public List<Account> getAllAccounts(){
+    public List<Account> getAllAccounts() {
         return StreamSupport
                 .stream(accountRepository.findAll().spliterator(), false)
                 .collect(Collectors.toList());
     }
 
-    public Account getAccountById(Long id){
-        return accountRepository.findById(id).orElseThrow(RuntimeException::new);
+    public Account getAccountById(Long id) {
+        Account account = accountRepository.findAccountById(id);
+        if (account == null) {
+            throw new NoSuchAccountException("NoSuchAccountException: account with [id]: " + id + " does not exist in database");
+        } else {
+            return account;
+        }
     }
 
     @Transactional
-    public Account editSelectedAccount(Long id, Account account){
+    public Account editSelectedAccount(Long id, Account account) {
         Account toEditAccount = getAccountById(id);
-        toEditAccount.setUsername(account.getUsername());
-        toEditAccount.setPassword(account.getPassword());
-        toEditAccount.setName(account.getName());
-        toEditAccount.setSurname(account.getSurname());
-        toEditAccount.setEmail(account.getEmail());
-        toEditAccount.setActive(account.isActive());
-        toEditAccount.setRoles(account.getRoles());
-        toEditAccount.setUser_stories(account.getUser_stories());
+        if (toEditAccount == null) {
+            throw new NoSuchAccountException("NoSuchAccountException: account with [id]: " + id + " does not exist in database");
+        } else {
+            toEditAccount.setUsername(account.getUsername());
+            toEditAccount.setPassword(account.getPassword());
+            toEditAccount.setName(account.getName());
+            toEditAccount.setSurname(account.getSurname());
+            toEditAccount.setEmail(account.getEmail());
+            toEditAccount.setActive(account.isActive());
+            toEditAccount.setRoles(account.getRoles());
+            toEditAccount.setUser_stories(account.getUser_stories());
             return accountRepository.save(toEditAccount);
-    }
-
-    public void removeSelectedAccount(Account account){
-        Collection<Post> posts = account.getUser_stories();
-        if (!posts.isEmpty()){
-            posts.forEach(var -> postService.removePostById(var.getId()));
         }
-        accountRepository.delete(account);
     }
 
+    public void removeSelectedAccount(Account account) {
+        Account delAccount = getAccountById(account.getId());
+        if (delAccount == null) {
+            throw new NoSuchAccountException("NoSuchAccountException: account with [id]: " + account.getId() + " does not exist in database");
+        } else {
 
+            Collection<Post> posts = account.getUser_stories();
+            if (!posts.isEmpty()) {
+                posts.forEach(var -> postService.removePostById(var.getId()));
+            }
+            accountRepository.delete(account);
+        }
+    }
 
+    public Account findAccountByUsername(String username) {
+        Account account = accountRepository.getAccountByUsername(username);
+        if (account == null) {
+            throw new NoSuchAccountException("NoSuchAccountException: account with [username]: " + username + " does not exist in database");
+        } else {
+            return accountRepository.getAccountByUsername(username);
+        }
+    }
 
 }
+
+
