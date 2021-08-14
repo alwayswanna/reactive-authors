@@ -44,14 +44,8 @@ public class PostWebClientService {
                 .uri(String.join("", "/post/", id))
                 .retrieve()
                 .onStatus(HttpStatus::is4xxClientError,
-                            error -> Mono.error(new RuntimeException("Can`t find User with id")))
+                            error -> Mono.error(new RuntimeException("Message error!")))
                 .bodyToMono(PostModel.class);
-
-        /*return webClient
-                .get()
-                .uri(String.join("", "/post/", id))
-                .retrieve()
-                .bodyToMono(PostModel.class);*/
     }
 
     public Mono<PostModel> editSelectedPost(String id, PostModel postModel){
