@@ -5,7 +5,9 @@ import a.gleb.reactiverest.models.PostModel;
 import a.gleb.reactiverest.service.AccountWebClientService;
 import a.gleb.reactiverest.service.PostWebClientService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -30,6 +32,7 @@ public class UnauthorizedController {
     @GetMapping("/post/{id}")
     public Mono<PostModel> getSelectedPost(@PathVariable final String id){
         return postWebClientService.getPostById(id);
+                //.switchIfEmpty(monoResponseStatusNotFoundException());
     }
 
     @GetMapping("/account/{id}")
@@ -40,6 +43,10 @@ public class UnauthorizedController {
     @PostMapping("/create/account")
     public Mono<Account> createNewAccount(@RequestBody final Account account){
         return accountWebClientService.createNewAccount(account);
+    }
+
+    public <T> Mono<T> monoResponseStatusNotFoundException(){
+        return Mono.error(new ResponseStatusException(HttpStatus.NOT_FOUND, "RequestException: request return NULL response"));
     }
 
 }

@@ -1,13 +1,18 @@
 package a.gleb.reactiverest.service;
 
 import a.gleb.reactiverest.models.PostModel;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Service
+@Slf4j
 public class PostWebClientService {
 
     private final WebClient webClient;
@@ -18,7 +23,8 @@ public class PostWebClientService {
     }
 
     public Flux<PostModel> getAllPost(){
-        return webClient.get()
+        return webClient
+                .get()
                 .uri(String.join("", "/posts"))
                 .retrieve()
                 .bodyToFlux(PostModel.class);
@@ -33,10 +39,19 @@ public class PostWebClientService {
     }
 
     public Mono<PostModel> getPostById(String id){
-        return webClient.get()
+        return webClient
+                .get()
                 .uri(String.join("", "/post/", id))
                 .retrieve()
+                .onStatus(HttpStatus::is4xxClientError,
+                            error -> Mono.error(new RuntimeException("Can`t find User with id")))
                 .bodyToMono(PostModel.class);
+
+        /*return webClient
+                .get()
+                .uri(String.join("", "/post/", id))
+                .retrieve()
+                .bodyToMono(PostModel.class);*/
     }
 
     public Mono<PostModel> editSelectedPost(String id, PostModel postModel){
