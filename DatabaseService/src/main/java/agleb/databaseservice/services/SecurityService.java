@@ -1,13 +1,12 @@
 package agleb.databaseservice.services;
 
+import agleb.databaseservice.exceptions.NoSuchAccountException;
 import agleb.databaseservice.model.Account;
 import agleb.databaseservice.repositories.AccountRepository;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-@Slf4j
 public class SecurityService {
 
     private final AccountRepository accountRepository;
@@ -18,14 +17,11 @@ public class SecurityService {
     }
 
     public Account securityAuthorization(String username){
-        Account account;
-        try{
-            account = accountRepository.getAccountByUsername(username);
+        Account account = accountRepository.getAccountByUsername(username);
+        if (account == null){
+            throw new NoSuchAccountException("NoSuchAccountException: account with [username]: " + username + " does not exist in database");
+        }else{
             return account;
-        }catch (Exception e){
-            log.warn(e.getMessage());
-            //TODO: exception;
-            throw new RuntimeException(e.getMessage());
         }
     }
 
