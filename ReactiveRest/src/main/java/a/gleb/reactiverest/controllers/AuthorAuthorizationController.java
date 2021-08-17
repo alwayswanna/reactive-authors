@@ -31,6 +31,7 @@ public class AuthorAuthorizationController {
     @PostMapping("/post")
     @PreAuthorize("hasRole('AUTHOR') or hasRole('ADMINISTRATOR')")
     public Mono<PostModel> createNewPost(@RequestBody final PostModel postModel) {
+        //TODO: return ResponseEntity
         return postWebClientService.createPost(postModel)
                 .switchIfEmpty(monoResponseStatusNotFountException());
     }
