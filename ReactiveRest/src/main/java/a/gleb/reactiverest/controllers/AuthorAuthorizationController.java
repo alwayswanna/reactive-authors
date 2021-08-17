@@ -7,9 +7,11 @@ import a.gleb.reactiverest.service.CheckingBodyService;
 import a.gleb.reactiverest.service.PostWebClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.reactive.function.BodyInserters;
+import org.springframework.web.reactive.function.server.ServerResponse;
 import org.springframework.web.server.ResponseStatusException;
 import reactor.core.publisher.Mono;
 
@@ -30,24 +32,40 @@ public class AuthorAuthorizationController {
 
     @PostMapping("/post")
     @PreAuthorize("hasRole('AUTHOR') or hasRole('ADMINISTRATOR')")
-    public Mono<PostModel> createNewPost(@RequestBody final PostModel postModel) {
-        //TODO: return ResponseEntity
-        return postWebClientService.createPost(postModel)
-                .switchIfEmpty(monoResponseStatusNotFountException());
+    public Mono<ServerResponse> createNewPost(@RequestBody final PostModel postModel) {
+        if (checkingBodyService.checkPostModelFromRequest(postModel)){
+            return ServerResponse.ok()
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body(BodyInserters.fromValue(postWebClientService.createPost(postModel)
+                            .switchIfEmpty(monoResponseStatusNotFountException())));
+        }else{
+            return ServerResponse.badRequest()
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body(BodyInserters.fromValue(new RuntimeException("RequestBodyException: invalid arguments")));
+        }
     }
 
     @PutMapping("/edit/post/{id}")
     @PreAuthorize("hasRole('AUTHOR') or hasRole('ADMINISTRATOR')")
-
-    public Mono<PostModel> editSelectedPost(@PathVariable final String id,
+    public Mono<ServerResponse> editSelectedPost(@PathVariable final String id,
                                             @RequestBody final PostModel postModel) {
-        return postWebClientService.editSelectedPost(id, postModel)
-                .switchIfEmpty(monoResponseStatusNotFountException());
+        if (checkingBodyService.checkPostModelFromRequest(postModel)){
+            return ServerResponse.ok()
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body(BodyInserters.fromValue(postWebClientService.editSelectedPost(id, postModel)
+                        .switchIfEmpty(monoResponseStatusNotFountException())));
+
+        }else{
+            return ServerResponse.badRequest()
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body(BodyInserters.fromValue(new RuntimeException("RequestBodyException: invalid arguments")));
+        }
     }
 
     @DeleteMapping("/delete/post/{id}")
     @PreAuthorize("hasRole('AUTHOR') or hasRole('ADMINISTRATOR')")
     public Mono<PostModel> deleteSelectedPost(@PathVariable final String id) {
+        //TODO: handle it;
         return postWebClientService.deleteSelectedPost(id)
                 .switchIfEmpty(monoResponseStatusNotFountException());
     }
