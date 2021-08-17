@@ -26,23 +26,26 @@ public class UnauthorizedController {
 
     @GetMapping("/posts")
     public Flux<PostModel> getAllStories(){
-        return postWebClientService.getAllPost();
+        return postWebClientService.getAllPost()
+                .switchIfEmpty(monoResponseStatusNotFoundException());
     }
 
     @GetMapping("/post/{id}")
     public Mono<PostModel> getSelectedPost(@PathVariable final String id){
-        return postWebClientService.getPostById(id);
-                //.switchIfEmpty(monoResponseStatusNotFoundException());
+        return postWebClientService.getPostById(id)
+                .switchIfEmpty(monoResponseStatusNotFoundException());
     }
 
     @GetMapping("/account/{id}")
     public Mono<Account> getAccountById(@PathVariable final String id){
-        return accountWebClientService.getAccountById(id);
+        return accountWebClientService.getAccountById(id)
+                .switchIfEmpty(monoResponseStatusNotFoundException());
     }
 
     @PostMapping("/create/account")
     public Mono<Account> createNewAccount(@RequestBody final Account account){
-        return accountWebClientService.createNewAccount(account);
+        return accountWebClientService.createNewAccount(account)
+                .switchIfEmpty(monoResponseStatusNotFoundException());
     }
 
     public <T> Mono<T> monoResponseStatusNotFoundException(){

@@ -1,7 +1,10 @@
 package a.gleb.reactiverest.service;
 
+import a.gleb.reactiverest.exceptions.DatabaseResponseException;
+import a.gleb.reactiverest.exceptions.DatabaseServerException;
 import a.gleb.reactiverest.models.Account;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
@@ -22,6 +25,10 @@ public class AccountWebClientService {
                 .get()
                 .uri(String.join("", "/accounts"))
                 .retrieve()
+                .onStatus(HttpStatus::is4xxClientError,
+                        error -> Mono.error(new DatabaseResponseException("DatabaseResponseException: can`t load all posts. HttpStatusCode: [4xx]")))
+                .onStatus(HttpStatus::is5xxServerError,
+                        error -> Mono.error(new DatabaseServerException("DatabaseServerException: can`t load all posts. HttpStatusCode: [500]")))
                 .bodyToFlux(Account.class);
     }
 
@@ -30,6 +37,10 @@ public class AccountWebClientService {
                 .get()
                 .uri(String.join("", "/account/", id))
                 .retrieve()
+                .onStatus(HttpStatus::is4xxClientError,
+                        error -> Mono.error(new DatabaseResponseException("DatabaseResponseException: there are no account with [id]: " + id + ". HttpStatusCode: [4xx]")))
+                .onStatus(HttpStatus::is5xxServerError,
+                        error -> Mono.error(new DatabaseServerException("DatabaseServerException: there are no account with [id]: " + id + ". HttpStatusCode: [500]")))
                 .bodyToMono(Account.class);
     }
 
@@ -39,6 +50,10 @@ public class AccountWebClientService {
                 .uri(String.join("", "/account"))
                 .body(Mono.just(account), Account.class)
                 .retrieve()
+                .onStatus(HttpStatus::is4xxClientError,
+                        error -> Mono.error(new DatabaseResponseException("DatabaseResponseException: can`t create new account: " + account + ". HttpStatusCode: [4xx]")))
+                .onStatus(HttpStatus::is5xxServerError,
+                        error -> Mono.error(new DatabaseServerException("DatabaseServerException: can`t create new account: " + account + ". HttpStatusCode: [500]")))
                 .bodyToMono(Account.class);
     }
 
@@ -49,6 +64,10 @@ public class AccountWebClientService {
                 .uri(String.join("", "/account/", id))
                 .body(Mono.just(account), Account.class)
                 .retrieve()
+                .onStatus(HttpStatus::is4xxClientError,
+                        error -> Mono.error(new DatabaseResponseException("DatabaseResponseException: can`t edit account with [id]: " + id + ". HttpStatusCode: [4xx]")))
+                .onStatus(HttpStatus::is5xxServerError,
+                        error -> Mono.error(new DatabaseServerException("DatabaseServerException: can`t edit account with [id]: " + id + ". HttpStatusCode: [500]")))
                 .bodyToMono(Account.class);
     }
 
@@ -57,6 +76,10 @@ public class AccountWebClientService {
                 .delete()
                 .uri(String.join("", "/account/", id))
                 .retrieve()
+                .onStatus(HttpStatus::is4xxClientError,
+                        error -> Mono.error(new DatabaseResponseException("DatabaseResponseException: can`t delete account with [id]: " + id + ". HttpStatusCode: [4xx]")))
+                .onStatus(HttpStatus::is5xxServerError,
+                        error -> Mono.error(new DatabaseServerException("DatabaseServerException: can`t delete account with [id]: " + id + ". HttpStatusCode: [500]")))
                 .bodyToMono(Account.class);
     }
 
@@ -65,6 +88,10 @@ public class AccountWebClientService {
                 .get()
                 .uri(String.join("", "/account/usrname/", username))
                 .retrieve()
+                .onStatus(HttpStatus::is4xxClientError,
+                        error -> Mono.error(new DatabaseResponseException("DatabaseResponseException: there are no account with [username]: " + username + ". HttpStatusCode: [4xx]")))
+                .onStatus(HttpStatus::is5xxServerError,
+                        error -> Mono.error(new DatabaseServerException("DatabaseServerException: there are no account with [username]: " + username + ". HttpStatusCode: [500]")))
                 .bodyToMono(Account.class);
     }
 }
