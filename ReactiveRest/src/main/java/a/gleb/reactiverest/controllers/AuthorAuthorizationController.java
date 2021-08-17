@@ -3,9 +3,11 @@ package a.gleb.reactiverest.controllers;
 import a.gleb.reactiverest.models.Account;
 import a.gleb.reactiverest.models.PostModel;
 import a.gleb.reactiverest.service.AccountWebClientService;
+import a.gleb.reactiverest.service.CheckingBodyService;
 import a.gleb.reactiverest.service.PostWebClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -17,11 +19,13 @@ public class AuthorAuthorizationController {
 
     private final PostWebClientService postWebClientService;
     private final AccountWebClientService accountWebClientService;
+    private final CheckingBodyService checkingBodyService;
 
     @Autowired
-    public AuthorAuthorizationController(PostWebClientService postWebClientService, AccountWebClientService accountWebClientService) {
+    public AuthorAuthorizationController(PostWebClientService postWebClientService, AccountWebClientService accountWebClientService, CheckingBodyService checkingBodyService) {
         this.postWebClientService = postWebClientService;
         this.accountWebClientService = accountWebClientService;
+        this.checkingBodyService = checkingBodyService;
     }
 
     @PostMapping("/post")
