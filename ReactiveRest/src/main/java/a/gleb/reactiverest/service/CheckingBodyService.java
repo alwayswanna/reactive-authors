@@ -2,10 +2,9 @@ package a.gleb.reactiverest.service;
 
 import a.gleb.reactiverest.models.Account;
 import a.gleb.reactiverest.models.PostModel;
-import lombok.extern.log4j.Log4j;
 import org.springframework.stereotype.Component;
 
-@Log4j
+
 @Component
 public class CheckingBodyService {
 
