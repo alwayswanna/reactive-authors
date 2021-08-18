@@ -31,8 +31,12 @@ public class AuthorAuthorizationController {
     @PostMapping("/post")
     @PreAuthorize("hasRole('AUTHOR') or hasRole('ADMINISTRATOR')")
     public Mono<PostModel> createNewPost(@RequestBody final PostModel postModel) {
-        return postWebClientService.createPost(postModel)
-                .switchIfEmpty(monoResponseStatusNotFountException());
+        if (checkingBodyService.checkPostModelFromRequest(postModel)){
+            return postWebClientService.createPost(postModel)
+                    .switchIfEmpty(monoResponseStatusNotFountException());
+        }else {
+            return null;
+        }
     }
 
     @PutMapping("/edit/post/{id}")
@@ -40,8 +44,12 @@ public class AuthorAuthorizationController {
 
     public Mono<PostModel> editSelectedPost(@PathVariable final String id,
                                             @RequestBody final PostModel postModel) {
-        return postWebClientService.editSelectedPost(id, postModel)
-                .switchIfEmpty(monoResponseStatusNotFountException());
+        if (checkingBodyService.checkPostModelFromRequest(postModel)){
+            return postWebClientService.editSelectedPost(id, postModel)
+                    .switchIfEmpty(monoResponseStatusNotFountException());
+        }else {
+            return null;
+        }
     }
 
     @DeleteMapping("/delete/post/{id}")
@@ -54,8 +62,12 @@ public class AuthorAuthorizationController {
     @PutMapping("/edit/account/{id}")
     public Mono<Account> editSelectedAccount(@PathVariable final String id,
                                              @RequestBody final Account account) {
-        return accountWebClientService.editSelectedAccount(id, account)
-                .switchIfEmpty(monoResponseStatusNotFountException());
+        if (checkingBodyService.checkAccountModelFromRequest(account)){
+            return accountWebClientService.editSelectedAccount(id, account)
+                    .switchIfEmpty(monoResponseStatusNotFountException());
+        }else {
+            return null;
+        }
     }
 
     @DeleteMapping("/delete/account/{id}")
