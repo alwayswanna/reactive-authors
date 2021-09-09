@@ -1,11 +1,15 @@
 package agleb.databaseservice.model.dto;
 
 import agleb.databaseservice.model.Post;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Objects;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class PostDTO {
 
     private Long id;
