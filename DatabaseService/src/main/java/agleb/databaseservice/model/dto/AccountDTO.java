@@ -3,13 +3,17 @@ package agleb.databaseservice.model.dto;
 import agleb.databaseservice.model.Account;
 import agleb.databaseservice.model.Post;
 import agleb.databaseservice.model.Role;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class AccountDTO {
     private Long id;
     private String username;
