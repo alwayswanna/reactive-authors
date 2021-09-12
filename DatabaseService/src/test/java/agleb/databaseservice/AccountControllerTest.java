@@ -62,7 +62,6 @@ public class AccountControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$[" + index + "].username", is(accountDTO.getUsername())))
-                .andExpect(jsonPath("$[" + index + "].password", is(accountDTO.getPassword())))
                 .andExpect(jsonPath("$[" + index + "].name", is(accountDTO.getName())))
                 .andExpect(jsonPath("$[" + index + "].surname", is(accountDTO.getSurname())))
                 .andExpect(jsonPath("$[" + index + "].email", is(accountDTO.getEmail())))
@@ -119,13 +118,10 @@ public class AccountControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("username", is(accountDTO.getUsername())))
-                .andExpect(jsonPath("password", is(accountDTO.getPassword())))
                 .andExpect(jsonPath("name", is(accountDTO.getName())))
                 .andExpect(jsonPath("surname", is(accountDTO.getSurname())))
                 .andExpect(jsonPath("email", is(accountDTO.getEmail())))
                 .andExpect(jsonPath("active", is(accountDTO.isActive())))
-                .andExpect(jsonPath("roleDTO", is(accountDTO.getRoleDTO())))
-
         ;
     }
 

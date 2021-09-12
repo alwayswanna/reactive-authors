@@ -6,6 +6,8 @@ import agleb.databaseservice.repositories.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class SecurityService {
 
@@ -17,11 +19,11 @@ public class SecurityService {
     }
 
     public Account securityAuthorization(String username){
-        Account account = accountRepository.getAccountByUsername(username);
-        if (account == null){
+        Optional<Account> account = accountRepository.getAccountByUsername(username);
+        if (account.isEmpty()){
             throw new NoSuchAccountException("NoSuchAccountException: account with [username]: " + username + " does not exist in database");
         }else{
-            return account;
+            return account.stream().toList().get(0);
         }
     }
 

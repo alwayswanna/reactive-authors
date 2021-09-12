@@ -30,7 +30,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                                         uri + "post/*",
                                         uri + "posts",
                                         uri + "account",
-                                        uri + "accounts").permitAll()
+                                        uri + "accounts",
+                                        uri + "account/*").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

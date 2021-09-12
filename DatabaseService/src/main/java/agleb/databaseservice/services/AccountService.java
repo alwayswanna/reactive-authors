@@ -5,6 +5,7 @@ import agleb.databaseservice.exceptions.NoSuchAccountException;
 import agleb.databaseservice.model.Account;
 import agleb.databaseservice.model.Post;
 import agleb.databaseservice.repositories.AccountRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -12,10 +13,12 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @Service
+@Slf4j
 public class AccountService {
 
     private final AccountRepository accountRepository;
@@ -30,7 +33,7 @@ public class AccountService {
     }
 
     public Account createAccount(Account account) {
-        if (findAccountByUsername(account.getUsername()) == null) {
+        if (!findAccountByUsername(account.getUsername())) {
             account.setPassword(
                     passwordEncoder.encode(account.getPassword()));
             return accountRepository.save(account);
@@ -89,13 +92,9 @@ public class AccountService {
         }
     }
 
-    public Account findAccountByUsername(String username) {
-        Account account = accountRepository.getAccountByUsername(username);
-        if (account == null) {
-            throw new NoSuchAccountException("NoSuchAccountException: account with [username]: " + username + " does not exist in database");
-        } else {
-            return accountRepository.getAccountByUsername(username);
-        }
+    public boolean findAccountByUsername(String username) {
+        Optional<Account> account = accountRepository.getAccountByUsername(username);
+        return account.isPresent();
     }
 
 }
