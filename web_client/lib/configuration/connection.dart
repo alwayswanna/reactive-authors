@@ -4,21 +4,22 @@ import 'package:http/http.dart' as http;
 import 'package:web_client/models/account.dart';
 import 'package:web_client/models/post.dart';
 
-const ROOT_PATH = "localhost:8080";
+const ROOT_PATH = "http://localhost:8080/";
 
 class Connection {
-  Future<List<Post>> fetchPost() async {
-    final response = await http.get(Uri.parse('http://localhost:8080/posts'));
 
-    if (response.statusCode == 200) {
-      // If the server did return a 200 OK response,
-      // then parse the JSON.
-      Iterable listPosts = jsonDecode(response.body);
-      return List<Post>.from(listPosts.map((e) => Post.fromJson(e)));
-    } else {
-      // If the server did not return a 200 OK response,
-      // then throw an exception.
-      throw Exception('Failed to load album');
+  List<Post> parseProducts(String responseBody) {
+    final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
+    return parsed.map<Post>((json) => Post.fromJson(json)).toList();
+  }
+  Future<List<Post>> fetchPosts() async {
+    final response = await http.get(Uri.parse(ROOT_PATH + 'unauthorized/posts'));
+    if(response.statusCode == 200){
+      print(response.body);
+      return parseProducts(response.body);
+    }else{
+      print(response.body + ' ' +  response.statusCode.toString());
+      throw Exception('RestApiException: can`t load data from server');
     }
   }
 
