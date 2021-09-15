@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:web_client/models/post.dart';
 import 'package:web_client/views/model_views/posts_list_view.dart';
+import 'package:web_client/views/model_views/title_widget.dart';
 
 class IndexPage extends StatelessWidget {
   final Future<List<Post>> postList;
@@ -29,7 +30,7 @@ class _IndexPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text("Product Navigation")),
+        appBar: AppBar(title: TitleWidget()),
         body: Center(
           child: FutureBuilder<List<Post>>(
               future: posts,
