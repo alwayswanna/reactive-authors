@@ -34,9 +34,6 @@ public class Post {
         post.setDescription(postDTO.getDescription());
         post.setFull_story(postDTO.getFull_story());
         post.setLikes(postDTO.getLikes());
-        if (Objects.nonNull(postDTO.getAuthorDTO())){
-            post.setAuthor(Account.from(postDTO.getAuthorDTO()));
-        }
         return post;
     }
 }

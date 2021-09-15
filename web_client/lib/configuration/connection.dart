@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:web_client/models/account.dart';
 import 'package:web_client/models/post.dart';
 
-const ROOT_PATH = "http://localhost:8080/";
+const ROOT_PATH = "http://localhost:8080";
 
 class Connection {
 
@@ -13,9 +13,8 @@ class Connection {
     return parsed.map<Post>((json) => Post.fromJson(json)).toList();
   }
   Future<List<Post>> fetchPosts() async {
-    final response = await http.get(Uri.parse(ROOT_PATH + 'unauthorized/posts'));
+    final response = await http.get(Uri.parse(ROOT_PATH + '/unauthorized/posts'));
     if(response.statusCode == 200){
-      print(response.body);
       return parseProducts(response.body);
     }else{
       print(response.body + ' ' +  response.statusCode.toString());

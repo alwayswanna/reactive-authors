@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+//CartDTO
 public class AccountDTO {
     private Long id;
     private String username;
@@ -34,7 +35,10 @@ public class AccountDTO {
         accountDTO.setSurname(account.getSurname());
         accountDTO.setEmail(account.getEmail());
         accountDTO.setActive(account.isActive());
-        accountDTO.setPostDTOList(dtoConvertPost(account.getUser_stories()));
+        accountDTO.setPostDTOList(account.getUser_stories()
+                .stream()
+                .map(PostDTO::from)
+                .collect(Collectors.toList()));
         accountDTO.setRoleDTO(converter(account));
 
         return accountDTO;
@@ -50,13 +54,4 @@ public class AccountDTO {
         }
     }
 
-    private static Collection<PostDTO> dtoConvertPost(Collection<Post> postList){
-        if (postList == null){
-            return null;
-        }else{
-            return postList.stream()
-                    .map(PostDTO::from)
-                    .collect(Collectors.toList());
-        }
-    }
 }

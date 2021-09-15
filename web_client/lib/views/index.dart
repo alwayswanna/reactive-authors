@@ -34,6 +34,7 @@ class _IndexPage extends StatelessWidget {
           child: FutureBuilder<List<Post>>(
               future: posts,
               builder: (context, AsyncSnapshot<List<Post>> snapshot) {
+                print(snapshot.data);
                 List<Widget> children;
                 if (snapshot.hasData) {
                   children = <Widget>[

@@ -10,6 +10,6 @@ public class PostModel {
     private String description;
     private String full_story;
     private int likes;
-    private Account authorDTO;
+    private PlainPost authorDTO;
 
 }

@@ -10,6 +10,7 @@ import java.util.Objects;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+//ItemDTO
 public class PostDTO {
 
     private Long id;
@@ -17,7 +18,7 @@ public class PostDTO {
     private String description;
     private String full_story;
     private int likes;
-    private AccountDTO authorDTO;
+    private PlainPostDTO authorDTO;
 
     public static PostDTO from(Post post){
         PostDTO postDTO = new PostDTO();
@@ -27,7 +28,7 @@ public class PostDTO {
         postDTO.setFull_story(post.getFull_story());
         postDTO.setLikes(post.getLikes());
         if (Objects.nonNull(post.getAuthor())){
-            postDTO.setAuthorDTO(AccountDTO.from(post.getAuthor()));
+            postDTO.setAuthorDTO(PlainPostDTO.from(post.getAuthor()));
         }
         return postDTO;
     }

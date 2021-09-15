@@ -9,13 +9,13 @@ class PostBoxList extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+      padding: const EdgeInsets.all(8),
+      scrollDirection: Axis.vertical,
+      shrinkWrap: true,
       itemCount: posts.length,
       itemBuilder: (context, index){
-        return GestureDetector(
-          child: PostBox(item: posts[index]),
-          onTap: (){
-
-          },
+        return Container(
+            child: PostBox(item: posts[index],),
         );
       }
     );
@@ -28,23 +28,31 @@ class PostBox extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(2), height: 140,
+    return Center(
       child: Card(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Expanded(
-                child: Container(
-                  padding: EdgeInsets.all(5),
-                  child: Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Text(this.item.title, style: TextStyle(fontWeight: FontWeight.bold),),
-                    Text(this.item.description),
-                    Text(this.item.likes.toString())
-                  ],),
-                )
-            )
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            ListTile(
+              leading: Icon(Icons.album),
+              title: Text(item.title),
+              subtitle: Text(item.description),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                TextButton(
+                  child: const Text('BUY TICKETS'),
+                  onPressed: () {/* ... */},
+                ),
+                const SizedBox(width: 8),
+                TextButton(
+                  child: const Text('BUY TICKETS'),
+                  onPressed: () {/* ... */},
+                ),
+                const SizedBox(width: 8),
+              ],
+            ),
           ],
         ),
       ),

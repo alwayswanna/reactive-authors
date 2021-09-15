@@ -1,4 +1,5 @@
-import 'account.dart';
+import 'package:web_client/models/plainpost.dart';
+
 
 class Post{
   final int id;
@@ -6,7 +7,7 @@ class Post{
   final String description;
   final String full_story;
   final int likes;
-  final Account authorDTO;
+  final PlainPost authorDTO;
 
 
   Post(this.id, this.title, this.description, this.full_story, this.likes, this.authorDTO);
@@ -17,7 +18,8 @@ class Post{
         data['description'],
         data['full_story'],
         data['likes'],
-        data['accountDTO']);
+        PlainPost.fromJson(data['authorDTO'])
+    );
   }
 
   factory Post.fromMap(Map<String, dynamic> json){
@@ -27,6 +29,7 @@ class Post{
         json['description'],
         json['full_story'],
         json['likes'],
-        json['authorDTO']);
+        json['authorDTO']
+    );
   }
 }
