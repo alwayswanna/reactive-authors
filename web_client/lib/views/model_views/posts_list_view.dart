@@ -41,16 +41,9 @@ class PostBox extends StatelessWidget{
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
-                TextButton(
-                  child: const Text('BUY TICKETS'),
-                  onPressed: () {/* ... */},
-                ),
-                const SizedBox(width: 8),
-                TextButton(
-                  child: const Text('BUY TICKETS'),
-                  onPressed: () {/* ... */},
-                ),
-                const SizedBox(width: 8),
+                Icon(Icons.star, color: Colors.red),
+                Text(item.likes.toString()),
+                Text('by: ' + item.authorDTO.username)
               ],
             ),
           ],
